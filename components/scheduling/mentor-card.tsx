@@ -3,7 +3,7 @@
 import { Card } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Star, Music, ArrowRight, Calendar } from 'lucide-react';
-import type { ListMentor } from '@/model/user-model';
+import type { ListMentor, StudentData } from '@/model/user-model';
 import { useState, useMemo } from 'react';
 import { ConfirmationDialog } from './confirmation-dialog';
 import { Button } from '@/components/ui/button';
@@ -11,12 +11,13 @@ import { Toggle } from '../ui/toggle';
 
 interface MentorCardProps {
     mentor: ListMentor;
+    student: StudentData;
     onToggleFavorite: (mentorId: string) => void;
 }
 
-const WEEKDAYS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+const WEEKDAYS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
 
-export function MentorCard({ mentor, onToggleFavorite }: MentorCardProps) {
+export function MentorCard({ mentor, onToggleFavorite, student }: MentorCardProps) {
     const [showConfirmation, setShowConfirmation] = useState(false);
 
     const groupedAgenda = useMemo(() => {
@@ -132,6 +133,7 @@ export function MentorCard({ mentor, onToggleFavorite }: MentorCardProps) {
                 isOpen={showConfirmation}
                 onClose={() => setShowConfirmation(false)}
                 mentor={mentor}
+                student={student}
             />
         </>
     );

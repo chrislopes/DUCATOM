@@ -15,20 +15,54 @@ async function refundAlunoCredit(aluno_id: number) {
     }
 }
 
+// ======================================================
+// CORS
+// ======================================================
+function getCorsHeaders(origin: string | null): Record<string, string> {
+    const allowedOrigins = [
+        'http://localhost:3000',
+
+        // 👉 QUANDO HOSPEDAR O FRONT
+        // 'https://seu-front.vercel.app',
+    ];
+
+    const allowOrigin =
+        origin && allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
+    return {
+        'Access-Control-Allow-Origin': allowOrigin,
+        'Access-Control-Allow-Headers':
+            'authorization, apikey, content-type, x-client-info',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    };
+}
+
 const supabase = createClient(
     Deno.env.get('SUPABASE_URL')!,
-    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
 );
 
 const GOOGLE_CALENDAR_SCOPE = 'https://www.googleapis.com/auth/calendar';
 const GOOGLE_WORKSPACE_USER = 'prime@ducatom.com.br';
 
 Deno.serve({ verifyJwt: false }, async (req) => {
+    const origin = req.headers.get('origin');
+    const corsHeaders = getCorsHeaders(origin);
+
     try {
+        // ======================================================
+        // PRE-FLIGHT (CORS)
+        // ======================================================
+        if (req.method === 'OPTIONS') {
+            return new Response(null, {
+                status: 204,
+                headers: corsHeaders,
+            });
+        }
+
         if (req.method !== 'POST') {
             return new Response(
                 JSON.stringify({ error: 'Método não permitido' }),
-                { status: 405 }
+                { status: 405, headers: corsHeaders },
             );
         }
 
@@ -41,7 +75,7 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                 JSON.stringify({
                     error: 'booking_id e description são obrigatórios',
                 }),
-                { status: 400 }
+                { status: 400, headers: corsHeaders },
             );
         }
 
@@ -50,7 +84,7 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                 JSON.stringify({
                     error: 'mentor_id ou aluno_id é obrigatório',
                 }),
-                { status: 400 }
+                { status: 400, headers: corsHeaders },
             );
         }
 
@@ -66,14 +100,14 @@ Deno.serve({ verifyJwt: false }, async (req) => {
         if (bookingError || !booking) {
             return new Response(
                 JSON.stringify({ error: 'Agendamento não encontrado' }),
-                { status: 404 }
+                { status: 404, headers: corsHeaders },
             );
         }
 
         if (booking.status !== 'reservado') {
             return new Response(
                 JSON.stringify({ error: 'Aula não pode mais ser cancelada' }),
-                { status: 400 }
+                { status: 400, headers: corsHeaders },
             );
         }
 
@@ -85,14 +119,14 @@ Deno.serve({ verifyJwt: false }, async (req) => {
         if (mentor_id && booking.mentor_id !== mentor_id) {
             return new Response(
                 JSON.stringify({ error: 'Mentor não autorizado' }),
-                { status: 403 }
+                { status: 403, headers: corsHeaders },
             );
         }
 
         if (aluno_id && booking.aluno_id !== aluno_id) {
             return new Response(
                 JSON.stringify({ error: 'Aluno não autorizado' }),
-                { status: 403 }
+                { status: 403, headers: corsHeaders },
             );
         }
 
@@ -131,7 +165,7 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                             'urn:ietf:params:oauth:grant-type:jwt-bearer',
                         assertion: jwt,
                     }),
-                }
+                },
             );
 
             const token = await tokenRes.json();
@@ -144,7 +178,7 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                         headers: {
                             Authorization: `Bearer ${token.access_token}`,
                         },
-                    }
+                    },
                 );
             }
         }
@@ -182,7 +216,7 @@ Deno.serve({ verifyJwt: false }, async (req) => {
 
             if (slot) {
                 const bookingDateTime = new Date(
-                    `${booking.booking_date}T${slot.start_time}`
+                    `${booking.booking_date}T${slot.start_time}`,
                 );
 
                 const now = new Date();
@@ -207,7 +241,13 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                 message: 'Aula cancelada com sucesso',
                 status: newStatus,
             }),
-            { headers: { 'Content-Type': 'application/json' } }
+            {
+                status: 200,
+                headers: {
+                    ...corsHeaders,
+                    'Content-Type': 'application/json',
+                },
+            },
         );
     } catch (err: any) {
         return new Response(
@@ -215,7 +255,7 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                 error: 'Erro interno',
                 details: err.message,
             }),
-            { status: 500 }
+            { status: 500, headers: corsHeaders },
         );
     }
 });

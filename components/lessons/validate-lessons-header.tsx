@@ -18,6 +18,7 @@ import {
 import { ArrowRightLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/auth-context';
 
 interface ValidateLessonsHeaderProps {
     isAdmin: boolean;
@@ -29,7 +30,7 @@ export function ValidateLessonsHeader({
     onMentorSelect,
 }: ValidateLessonsHeaderProps) {
     const { loading, mentorData, byListMentorAdmin } = useDashboardAdmin();
-
+    const { user } = useAuth();
     const router = useRouter();
 
     const [selectedMentor, setSelectedMentor] = useState<string>();
@@ -74,43 +75,45 @@ export function ValidateLessonsHeader({
     return (
         <div className="text-center space-y-3">
             <div className="w-full flex items-center justify-end">
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button
-                                onClick={handleSwitchScreen}
-                                className=" cursor-pointer
-              w-full md:w-auto
-              bg-linear-to-r
-              from-[#f0e087]
-              to-[#d4c474]
-              hover:from-[#d4c474]
-              hover:to-[#f0e087]
-              text-[#083d71]
-              font-semibold
-              px-4 py-2.5
-              rounded-xl
-              shadow-lg
-              hover:shadow-xl
-              transition-all duration-300
-              flex items-center justify-center gap-2
-            "
-                            >
-                                <ArrowRightLeft className="w-5 h-5" />
-                                <span className="hidden sm:inline">
-                                    Trocar Tela
-                                </span>
-                            </Button>
-                        </TooltipTrigger>
+                {user?.role === 'ADMIN' && (
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    onClick={handleSwitchScreen}
+                                    className=" cursor-pointer
+                                            w-full md:w-auto
+                                            bg-linear-to-r
+                                            from-[#f0e087]
+                                            to-[#d4c474]
+                                            hover:from-[#d4c474]
+                                            hover:to-[#f0e087]
+                                            text-[#083d71]
+                                            font-semibold
+                                            px-4 py-2.5
+                                            rounded-xl
+                                            shadow-lg
+                                            hover:shadow-xl
+                                            transition-all duration-300
+                                            flex items-center justify-center gap-2
+                                            "
+                                >
+                                    <ArrowRightLeft className="w-5 h-5" />
+                                    <span className="hidden sm:inline">
+                                        Trocar Tela
+                                    </span>
+                                </Button>
+                            </TooltipTrigger>
 
-                        <TooltipContent
-                            side="bottom"
-                            className="font-semibold text-white"
-                        >
-                            <p>Voltar para o dashboard</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
+                            <TooltipContent
+                                side="bottom"
+                                className="font-semibold text-white"
+                            >
+                                <p>Voltar para o dashboard</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                )}
             </div>
 
             <div className="flex items-center justify-center gap-3">

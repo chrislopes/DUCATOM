@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { X, Check, Calendar, Timer } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import type { ListMentor } from '@/model/user-model';
+import type { ListMentor, StudentData } from '@/model/user-model';
 import {
     Select,
     SelectContent,
@@ -21,23 +21,29 @@ import {
     SelectTrigger,
     SelectValue,
 } from '../ui/select';
+import { useRPC_Bookings } from '@/hooks/use-RPC_bookings';
+import { Spinner } from '@/components/ui/spinner';
 
 interface ConfirmationDialogProps {
     isOpen: boolean;
     onClose: () => void;
     mentor: ListMentor;
+    student: StudentData;
 }
 
-const WEEKDAYS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+const WEEKDAYS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
 
 export function ConfirmationDialog({
     isOpen,
     onClose,
     mentor,
+    student,
 }: ConfirmationDialogProps) {
     const router = useRouter();
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
     const [selectedTime, setSelectedTime] = useState<string | null>(null);
+
+    const { studentBookingWithMentor, loading } = useRPC_Bookings();
 
     // Filtra os horários do dia selecionado
     const timesForDay =
@@ -48,21 +54,52 @@ export function ConfirmationDialog({
             : [];
 
     const handleConfirm = () => {
-        console.log('[v0] Mentor selecionado:', mentor.id);
-        console.log('Dia:', selectedDay, 'Horário:', selectedTime);
-        console.log('MENTOR ', mentor);
+        if (selectedDay === null || !selectedTime) return;
 
+        const selectedSlot = mentor.agenda_mentor.find(
+            (slot) =>
+                slot.weekday === selectedDay &&
+                slot.start_time.startsWith(selectedTime),
+        );
+
+        if (!selectedSlot) {
+            console.error('Slot não encontrado');
+            return;
+        }
+        const { mentor_weekday_id, mentor_time_slot_id } = selectedSlot;
+        const mentor_id = parseInt(mentor.id);
+
+        studentBookingWithMentor(
+            student.id,
+            mentor_id,
+            mentor_weekday_id,
+            mentor_time_slot_id,
+        );
+
+        resetState();
         onClose();
-        // router.push('/agendamento-confirmado'); // próxima etapa
     };
 
     const handleCancel = () => {
-        console.log(mentor);
+        resetState();
         onClose();
     };
 
+    const resetState = () => {
+        setSelectedDay(null);
+        setSelectedTime(null);
+    };
+
+    const canConfirm = selectedDay !== null && selectedTime !== null;
+
     return (
-        <Dialog open={isOpen} onOpenChange={onClose}>
+        <Dialog
+            open={isOpen}
+            onOpenChange={(open) => {
+                if (!open) resetState();
+                onClose();
+            }}
+        >
             <DialogContent className="bg-[#0a5491] border-[#0d6bb8] border-2 max-w-md p-6 md:p-8">
                 <DialogHeader className="space-y-4">
                     <DialogTitle className="text-white text-xl md:text-2xl font-bold text-center">
@@ -94,7 +131,7 @@ export function ConfirmationDialog({
                                     {WEEKDAYS.map((dayName, idx) => {
                                         const hasTimes =
                                             mentor.agenda_mentor.some(
-                                                (a) => a.weekday === idx
+                                                (a) => a.weekday === idx,
                                             );
                                         if (!hasTimes) return null; // mostra só dias com horários
 
@@ -177,17 +214,21 @@ export function ConfirmationDialog({
                         onClick={handleConfirm}
                         variant="ghost"
                         size="lg"
-                        disabled={!selectedTime} // só habilita se ambos tiverem valor
+                        disabled={!canConfirm}
                         className={`h-16 w-16 md:h-20 md:w-20 rounded-full p-0 flex items-center justify-center transition-colors ${
-                            !selectedDay || !selectedTime
-                                ? 'bg-green-500/50 cursor-not-allowed hover:bg-green-500/50'
-                                : 'bg-green-500 hover:bg-green-600'
+                            canConfirm
+                                ? 'bg-green-500 hover:bg-green-600'
+                                : 'bg-green-500/50 cursor-not-allowed hover:bg-green-500/50'
                         }`}
                     >
-                        <Check
-                            className="h-8 w-8 md:h-10 md:w-10 text-white"
-                            strokeWidth={3}
-                        />
+                        {loading ? (
+                            <Spinner data-icon="inline-start" />
+                        ) : (
+                            <Check
+                                className="h-8 w-8 md:h-10 md:w-10 text-white"
+                                strokeWidth={3}
+                            />
+                        )}
                     </Button>
                 </div>
             </DialogContent>

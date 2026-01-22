@@ -16,6 +16,7 @@ import {
 
 export function MentorSelection() {
     const { loading, mentores, listMentor } = useListMentorUser();
+
     const { createFavoriteMentor, loading: favoriteLoading } =
         useFavoriteMentor();
 
@@ -43,6 +44,8 @@ export function MentorSelection() {
             setStudentData(JSON.parse(saved));
         }
 
+        
+
         listMentor();
     }, []);
 
@@ -57,7 +60,7 @@ export function MentorSelection() {
         if (!mentores || mentores.length === 0) return;
 
         const favoriteMap = new Map<string, boolean>(
-            mentorFavoriteData.map((f) => [String(f.mentor_id), f.favoritado])
+            mentorFavoriteData.map((f) => [String(f.mentor_id), f.favoritado]),
         );
 
         const mapped: ListMentor[] = mentores.map((m: any) => ({
@@ -92,22 +95,22 @@ export function MentorSelection() {
         // 🔹 Atualização otimista
         setMentors((prev) =>
             prev.map((m) =>
-                m.id === mentorId ? { ...m, isFavorite: novoFavorito } : m
-            )
+                m.id === mentorId ? { ...m, isFavorite: novoFavorito } : m,
+            ),
         );
 
         const result = await createFavoriteMentor(
             studentData.id,
             Number(mentorId),
-            novoFavorito
+            novoFavorito,
         );
 
         if (!result) {
             // 🔴 rollback
             setMentors((prev) =>
                 prev.map((m) =>
-                    m.id === mentorId ? { ...m, isFavorite: !novoFavorito } : m
-                )
+                    m.id === mentorId ? { ...m, isFavorite: !novoFavorito } : m,
+                ),
             );
         }
     };
@@ -116,7 +119,7 @@ export function MentorSelection() {
         const matchesTime =
             selectedTime === 'all' ||
             mentor.agenda_mentor.some((slot: any) =>
-                slot.start_time.startsWith(selectedTime)
+                slot.start_time.startsWith(selectedTime),
             );
 
         const matchesFavorite = !showOnlyFavorites || mentor.isFavorite;
@@ -136,6 +139,7 @@ export function MentorSelection() {
             <MentorList
                 todayMentors={filteredMentors}
                 tomorrowMentors={[]}
+                student={studentData!}
                 onToggleFavorite={(id) => toggleFavorite(id)}
                 loading={loading}
             />

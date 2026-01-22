@@ -1,10 +1,10 @@
 import { MentorCard } from './mentor-card';
-import type { ListMentor } from '@/model/user-model';
-
+import type { ListMentor, StudentData } from '@/model/user-model';
 
 interface MentorListProps {
     todayMentors: ListMentor[];
     tomorrowMentors: ListMentor[];
+    student: StudentData;
     loading: boolean;
     onToggleFavorite: (mentorId: string, period: 'today' | 'tomorrow') => void;
 }
@@ -12,6 +12,7 @@ interface MentorListProps {
 export function MentorList({
     todayMentors,
     tomorrowMentors,
+    student,
     onToggleFavorite,
 }: MentorListProps) {
     return (
@@ -19,14 +20,12 @@ export function MentorList({
             {/* Hoje */}
             {todayMentors.length > 0 && (
                 <section>
-                    <h2 className="text-white text-lg md:text-xl font-semibold mb-4">
-                        Hoje
-                    </h2>
                     <div className="space-y-3">
                         {todayMentors.map((mentor) => (
                             <MentorCard
                                 key={mentor.id}
                                 mentor={mentor}
+                                student={student}
                                 onToggleFavorite={(id) =>
                                     onToggleFavorite(id, 'today')
                                 }
@@ -47,6 +46,7 @@ export function MentorList({
                             <MentorCard
                                 key={mentor.id}
                                 mentor={mentor}
+                                student={student}
                                 onToggleFavorite={(id) =>
                                     onToggleFavorite(id, 'tomorrow')
                                 }

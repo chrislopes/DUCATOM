@@ -8,8 +8,29 @@ import { SignJWT, importPKCS8 } from 'https://esm.sh/jose@5';
 // ======================================================
 const supabase = createClient(
     Deno.env.get('SUPABASE_URL')!,
-    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
 );
+
+// ======================================================
+// CORS
+// ======================================================
+function getCorsHeaders(origin: string | null): Record<string, string> {
+    const allowedOrigins = [
+        'http://localhost:3000',
+
+        // 👉 QUANDO HOSPEDAR O FRONT
+        // 'https://seu-front.vercel.app',
+    ];
+
+    const allowOrigin =
+        origin && allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
+    return {
+        'Access-Control-Allow-Origin': allowOrigin,
+        'Access-Control-Allow-Headers':
+            'authorization, apikey, content-type, x-client-info',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    };
+}
 
 // ======================================================
 // FUNÇÃO AUXILIAR → FORMATAR DATA LOCAL (SEM UTC)
@@ -18,9 +39,9 @@ function formatDateTimeLocal(date: Date): string {
     const pad = (n: number) => n.toString().padStart(2, '0');
 
     return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
-        date.getDate()
+        date.getDate(),
     )}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(
-        date.getSeconds()
+        date.getSeconds(),
     )}`;
 }
 
@@ -46,6 +67,19 @@ const GOOGLE_WORKSPACE_USER = 'prime@ducatom.com.br';
 // EDGE FUNCTION → MENTOR APROVA AULA
 // ======================================================
 Deno.serve({ verifyJwt: false }, async (req) => {
+    const origin = req.headers.get('origin');
+    const corsHeaders = getCorsHeaders(origin);
+
+    // ======================================================
+    // PRE-FLIGHT (CORS)
+    // ======================================================
+    if (req.method === 'OPTIONS') {
+        return new Response(null, {
+            status: 204,
+            headers: corsHeaders,
+        });
+    }
+
     try {
         // ======================================================
         // VALIDAR MÉTODO
@@ -53,7 +87,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
         if (req.method !== 'POST') {
             return new Response(
                 JSON.stringify({ error: 'Método não permitido' }),
-                { status: 405 }
+                {
+                    status: 405,
+                    headers: corsHeaders,
+                },
             );
         }
 
@@ -66,7 +103,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
         } catch {
             return new Response(
                 JSON.stringify({ error: 'Body inválido ou vazio' }),
-                { status: 400 }
+                {
+                    status: 400,
+                    headers: corsHeaders,
+                },
             );
         }
 
@@ -75,14 +115,20 @@ Deno.serve({ verifyJwt: false }, async (req) => {
         if (!action) {
             return new Response(
                 JSON.stringify({ error: 'action é obrigatório' }),
-                { status: 400 }
+                {
+                    status: 400,
+                    headers: corsHeaders,
+                },
             );
         }
 
         if (!booking_id || !mentor_id) {
             return new Response(
                 JSON.stringify({ error: 'Campos obrigatórios ausentes' }),
-                { status: 400 }
+                {
+                    status: 400,
+                    headers: corsHeaders,
+                },
             );
         }
 
@@ -99,7 +145,7 @@ Deno.serve({ verifyJwt: false }, async (req) => {
         mentor_id,
         aluno_id,
         mentor_time_slot_id
-      `
+      `,
             )
             .eq('id', booking_id)
             .eq('mentor_id', mentor_id)
@@ -108,7 +154,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
         if (bookingFetchError || !booking) {
             return new Response(
                 JSON.stringify({ error: 'Booking não encontrado' }),
-                { status: 404 }
+                {
+                    status: 404,
+                    headers: corsHeaders,
+                },
             );
         }
 
@@ -117,7 +166,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                 JSON.stringify({
                     error: 'Esse booking não pode mais ser aprovado',
                 }),
-                { status: 409 }
+                {
+                    status: 409,
+                    headers: corsHeaders,
+                },
             );
         }
 
@@ -133,7 +185,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
         if (slotError || !slot) {
             return new Response(
                 JSON.stringify({ error: 'Erro ao obter horário do mentor' }),
-                { status: 500 }
+                {
+                    status: 500,
+                    headers: corsHeaders,
+                },
             );
         }
 
@@ -146,7 +201,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
             if (!aluno_id) {
                 return new Response(
                     JSON.stringify({ error: 'aluno_id é obrigatório' }),
-                    { status: 400 }
+                    {
+                        status: 400,
+                        headers: corsHeaders,
+                    },
                 );
             }
 
@@ -155,7 +213,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                     JSON.stringify({
                         error: 'Descrição é obrigatória para negar a aula',
                     }),
-                    { status: 400 }
+                    {
+                        status: 400,
+                        headers: corsHeaders,
+                    },
                 );
             }
 
@@ -164,7 +225,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                     JSON.stringify({
                         error: 'Aluno não autorizado para este booking',
                     }),
-                    { status: 403 }
+                    {
+                        status: 403,
+                        headers: corsHeaders,
+                    },
                 );
             }
 
@@ -185,7 +249,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                     JSON.stringify({
                         error: 'Erro ao negar booking pelo aluno',
                     }),
-                    { status: 500 }
+                    {
+                        status: 500,
+                        headers: corsHeaders,
+                    },
                 );
             }
 
@@ -196,7 +263,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                     success: true,
                     message: 'Booking negado pelo aluno com sucesso',
                 }),
-                { status: 200 }
+                {
+                    status: 200,
+                    headers: corsHeaders,
+                },
             );
         }
 
@@ -206,7 +276,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                     JSON.stringify({
                         error: 'Descrição é obrigatória para negar a aula',
                     }),
-                    { status: 400 }
+                    {
+                        status: 400,
+                        headers: corsHeaders,
+                    },
                 );
             }
 
@@ -224,7 +297,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                     JSON.stringify({
                         error: 'Erro ao negar booking pelo mentor',
                     }),
-                    { status: 500 }
+                    {
+                        status: 500,
+                        headers: corsHeaders,
+                    },
                 );
             }
 
@@ -236,7 +312,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                     success: true,
                     message: 'Booking negado pelo mentor',
                 }),
-                { status: 200 }
+                {
+                    status: 200,
+                    headers: corsHeaders,
+                },
             );
         }
 
@@ -246,6 +325,7 @@ Deno.serve({ verifyJwt: false }, async (req) => {
         if (action !== 'approve') {
             return new Response(JSON.stringify({ error: 'Action inválida' }), {
                 status: 400,
+                headers: corsHeaders,
             });
         }
 
@@ -253,7 +333,7 @@ Deno.serve({ verifyJwt: false }, async (req) => {
         // MONTAR DATA/HORA LOCAL
         // ======================================================
         const startDateTime = new Date(
-            `${booking.booking_date}T${slot.start_time}`
+            `${booking.booking_date}T${slot.start_time}`,
         );
 
         const endDateTime = new Date(startDateTime);
@@ -272,7 +352,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                 JSON.stringify({
                     error: 'GOOGLE_SERVICE_ACCOUNT_KEY não configurado',
                 }),
-                { status: 500 }
+                {
+                    status: 500,
+                    headers: corsHeaders,
+                },
             );
         }
 
@@ -312,7 +395,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                     error: 'Erro ao obter token do Google',
                     details: tokenData,
                 }),
-                { status: 500 }
+                {
+                    status: 500,
+                    headers: corsHeaders,
+                },
             );
         }
 
@@ -349,7 +435,7 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(eventPayload),
-            }
+            },
         );
 
         const eventData = await eventRes.json();
@@ -360,14 +446,17 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                     error: 'Erro ao criar evento no Google Calendar',
                     details: eventData,
                 }),
-                { status: 500 }
+                {
+                    status: 500,
+                    headers: corsHeaders,
+                },
             );
         }
 
         const meetLink =
             eventData.hangoutLink ??
             eventData.conferenceData?.entryPoints?.find(
-                (e: any) => e.entryPointType === 'video'
+                (e: any) => e.entryPointType === 'video',
             )?.uri ??
             null;
 
@@ -392,7 +481,10 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                     error: 'Meet criado, mas erro ao atualizar booking',
                     details: updateError.message,
                 }),
-                { status: 500 }
+                {
+                    status: 500,
+                    headers: corsHeaders,
+                },
             );
         }
 
@@ -410,8 +502,12 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                 ends_at: endDateTime,
             }),
             {
-                headers: { 'Content-Type': 'application/json' },
-            }
+                status: 200,
+                headers: {
+                    ...corsHeaders,
+                    'Content-Type': 'application/json',
+                },
+            },
         );
     } catch (err: any) {
         console.error(err);
@@ -420,7 +516,7 @@ Deno.serve({ verifyJwt: false }, async (req) => {
                 error: 'Erro interno inesperado',
                 details: err.message,
             }),
-            { status: 500 }
+            { status: 500, headers: corsHeaders },
         );
     }
 });

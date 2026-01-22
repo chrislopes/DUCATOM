@@ -1,22 +1,45 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useAuth } from '@/contexts/auth-context';
-import { Calendar } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+
+import { ListBooking } from '@/model/list-bookings-model';
+
+import { CardListBookingStudent } from './card-list-booking-student';
+import { CardListBookingMentor } from './card-list-booking-mentor';
+import { Spinner } from '../ui/spinner';
 
 interface NextClassSectionProps {
-    nextClass: {
-        date: string;
-        time: string;
-        teacher: string;
-    } | null;
+    listBookings: ListBooking[];
+    loading: boolean;
+    onRefreshBookings: () => Promise<void>;
 }
 
-export function NextClassSection({ nextClass }: NextClassSectionProps) {
-    const router = useRouter();
+export function NextClassSection({
+    listBookings,
+    loading,
+    onRefreshBookings,
+}: NextClassSectionProps) {
     const { user } = useAuth();
+
+    function StatusBadge({ status }: { status: string }) {
+        const map: Record<string, string> = {
+            pendente_aprovacao: 'bg-yellow-500/20 text-yellow-300',
+            reservado: 'bg-purple-600/20 text-purple-300',
+            negado_mentor: 'bg-stone-500/20 text-stone-300',
+            cancelado_mentor: 'bg-red-800/20 text-red-300',
+        };
+
+        return (
+            <span
+                className={`text-xs px-3 py-1 rounded-full font-medium ${
+                    map[status] ?? 'bg-gray-500/20 text-gray-300'
+                }`}
+            >
+                {status.replace('_', ' ')}
+            </span>
+        );
+    }
 
     return (
         <section>
@@ -26,44 +49,33 @@ export function NextClassSection({ nextClass }: NextClassSectionProps) {
                 </h2>
             )}
             <Card className="bg-[#0a5491] border-[#0d6bb8] p-6 md:p-8 text-center">
-                {!nextClass ? (
-                    <>
-                        <p className="text-[#0d6bb8] text-lg md:text-xl lg:text-2xl font-bold uppercase mb-6 tracking-wider">
-                            Nenhum Evento Futuro
-                        </p>
-                        {user?.role === 'STUDENT' && (
-                            <Button
-                                onClick={() =>
-                                    router.push('/selecionar-mentor')
-                                }
-                                className="bg-[#f0e087] hover:bg-[#e5d67a] text-[#083d71] font-semibold text-base md:text-lg px-8 py-6 rounded-lg w-full md:w-auto cursor-pointer"
-                            >
-                                <Calendar className="mr-2 h-5 w-5" />
-                                Agendar Aula
-                            </Button>
-                        )}
-                        {user?.role === 'MENTOR' && (
-                            <Button
-                                onClick={() =>
-                                    router.push('/controle-agenda')
-                                }
-                                className="bg-[#f0e087] hover:bg-[#e5d67a] text-[#083d71] font-semibold text-base md:text-lg px-8 py-6 rounded-lg w-full md:w-auto cursor-pointer"
-                            >
-                                <Calendar className="mr-2 h-5 w-5" />
-                                Controle de agenda
-                            </Button>
-                        )}
-                    </>
-                ) : (
-                    <div className="text-white">
-                        <p className="text-lg font-semibold mb-2">
-                            {nextClass.date}
-                        </p>
-                        <p className="text-base mb-1">{nextClass.time}</p>
-                        <p className="text-sm text-white/80">
-                            Professor: {nextClass.teacher}
-                        </p>
+                {/* LOADING */}
+                {loading && (
+                    <div className="w-full flex justify-center items-center">
+                        <Spinner className="size-20 text-[#f0e087] " />
                     </div>
+                )}
+
+                {/* STUDENT */}
+                {user?.role === 'STUDENT' && !loading && (
+                    <CardListBookingStudent
+                        listBookings={listBookings}
+                        onRefreshBookings={onRefreshBookings}
+                        functionStatusBadge={(status) => (
+                            <StatusBadge status={status} />
+                        )}
+                    />
+                )}
+
+                {/* MENTOR*/}
+                {user?.role === 'MENTOR' && !loading && (
+                    <CardListBookingMentor
+                        listBookings={listBookings}
+                        onRefreshBookings={onRefreshBookings}
+                        functionStatusBadge={(status) => (
+                            <StatusBadge status={status} />
+                        )}
+                    />
                 )}
             </Card>
         </section>

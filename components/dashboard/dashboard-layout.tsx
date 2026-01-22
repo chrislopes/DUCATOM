@@ -9,10 +9,16 @@ import { useAuth } from '@/contexts/auth-context';
 import { useEffect, useRef, useState } from 'react';
 import { useDashboardUser } from '@/hooks/useDashboard';
 import { ModalValidateMentor } from './modal-mentor-validate';
+import { useBookingsListSummary } from '@/hooks/use-ListBookings';
+
 
 export function DashboardLayout() {
     const { user } = useAuth();
     const { byIdUser, studentData, mentorData } = useDashboardUser();
+
+    const { byBookingsListSummary, listBookings, loading } =
+        useBookingsListSummary();
+
     const [openValidateMentorModal, setOpenValidateMentorModal] =
         useState(false);
 
@@ -20,7 +26,6 @@ export function DashboardLayout() {
         name: user?.nome.split(' ')[0] || 'Usuário',
         credits: studentData?.credito ?? 0,
         nivel: mentorData?.nivel ?? 0,
-        nextClass: null, // null significa que não há aula agendada
     };
 
     const didRun = useRef(false);
@@ -39,7 +44,6 @@ export function DashboardLayout() {
      */
     useEffect(() => {
         localStorage.setItem('mentor_id', JSON.stringify(mentorData));
-        
 
         if (
             user?.role === 'MENTOR' &&
@@ -51,7 +55,29 @@ export function DashboardLayout() {
         } else {
             setOpenValidateMentorModal(false);
         }
-    }, [user?.role, mentorData?.nivel]);
+
+        if (user?.role === 'MENTOR') {
+            if (!mentorData?.id) return;
+
+            byBookingsListSummary(mentorData?.id);
+        } else {
+            if (!studentData?.id) return;
+            byBookingsListSummary(studentData?.id);
+        }
+    }, [user?.role, mentorData?.nivel, studentData?.id]);
+
+    
+    const refreshBookings = async () => {
+        if (user?.role === 'STUDENT') {
+            if (!studentData?.id) return;
+            await byBookingsListSummary(studentData.id);
+        }
+
+        if (user?.role === 'MENTOR') {
+            if (!mentorData?.id) return;
+            await byBookingsListSummary(mentorData.id);
+        }
+    };
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -77,7 +103,12 @@ export function DashboardLayout() {
                     )}
 
                     {/* Seção da próxima aula */}
-                    <NextClassSection nextClass={userData.nextClass} />
+
+                    <NextClassSection
+                        listBookings={listBookings}
+                        loading={loading}
+                        onRefreshBookings={refreshBookings}
+                    />
 
                     {/* Navegação principal */}
                     <DashboardNavigation />

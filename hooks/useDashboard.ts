@@ -40,6 +40,7 @@ export function useDashboardUser() {
 
                 setStudentData(response.data[0]);
             } else if (user?.role == 'MENTOR') {
+
                 const response = await byIdMentorService(user?.id);
 
                 if (!response.success) {
@@ -49,7 +50,7 @@ export function useDashboardUser() {
                     return null;
                 }
 
-                //APOS REMOVER O MENTORDATA E DEIXAR APENA O SEMENTORID QUE É CONTEXT API
+                //APOS REMOVER O MENTORDATA E DEIXAR APENA O SETMENTORID QUE É CONTEXT API
                 setMentorData(response.data[0]);
 
                 setMentorId(response.data[0].id);
