@@ -15,6 +15,7 @@ import { MentorData } from '@/model/user-model';
 type MentorBookingStatus =
     | 'pendente_aprovacao'
     | 'reservado'
+    | 'negado_inatividade'
     | 'negado_aluno'
     | 'cancelado_aluno';
 
@@ -109,7 +110,9 @@ export function CardListBookingMentor({
         description?: string,
     ) {
         if (
-            (status === 'negado_aluno' || status === 'cancelado_aluno') &&
+            (status === 'negado_aluno' ||
+                status === 'cancelado_aluno' ||
+                status === 'negado_inatividade') &&
             description
         ) {
             return (
@@ -131,7 +134,7 @@ export function CardListBookingMentor({
                     href={video_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-emerald-300 text-sm font-medium underline underline-offset-2 hover:text-emerald-200 w-full flex items-center transition w-full"
+                    className="text-emerald-300 text-sm font-medium underline underline-offset-2 hover:text-emerald-200 flex items-center transition w-full"
                 >
                     <Image
                         src="/google-meet.png"
@@ -179,9 +182,8 @@ export function CardListBookingMentor({
                         <div className="flex items-center gap-2">
                             <div className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
                             <span className="text-white/70 text-sm font-medium">
-                                {listBookings.length} aula
-                                {listBookings.length > 1 ? 's' : ''} agendada
-                                {listBookings.length > 1 ? 's' : ''}
+                                {listBookings.length === 1 ? 'Notificação' : ''}
+                                {listBookings.length > 1 ? 'Notificações' : ''}
                             </span>
                         </div>
                     </div>
@@ -204,19 +206,16 @@ export function CardListBookingMentor({
                         {listBookings.map((item: any, index: number) => (
                             <div
                                 key={item.booking_id}
-                                className="group relative bg-gradient-to-r from-white/[0.03] to-white/[0.06]
-                                hover:from-white/[0.08] hover:to-white/[0.12]
-                                transition-all duration-300 rounded-2xl p-5
-                                border border-white/[0.08] hover:border-white/20"
+                                className="group relative bg-gradient-to-r from-white/[0.03] to-white/[0.06] hover:from-white/[0.08] hover:to-white/[0.12] transition-all duration-300 rounded-2xl p-5 border border-white/[0.08] hover:border-white/20 hover:shadow-lg hover:shadow-black/20"
                                 style={{ animationDelay: `${index * 50}ms` }}
                             >
                                 {/* Indicador lateral */}
                                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r-full bg-gradient-to-b from-[#f0e087] to-[#e5d67a] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                                <div className="flex flex-col sm:flex-row sm:justify-between gap-4">
+                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
                                     {/* ESQUERDA */}
-                                    <div className="space-y-3">
-                                        <div className="flex flex-wrap gap-2 text-white">
+                                    <div className="flex-1 space-y-3">
+                                        <div className="flex flex-wrap items-center gap-2 text-white">
                                             <span className="inline-flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-lg text-sm font-medium">
                                                 <Calendar className="w-3.5 h-3.5 text-[#f0e087]" />
                                                 {item.weekday_label}

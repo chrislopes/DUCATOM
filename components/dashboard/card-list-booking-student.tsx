@@ -4,11 +4,10 @@ import { ListBooking, CancelAction } from '@/model/list-bookings-model';
 import { Calendar, Clock, User, CalendarX, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import Image from 'next/image';
 import { StudentCancelBookingModal } from './StudentCancelBookingModal';
 import { useRPC_Bookings } from '@/hooks/use-RPC_bookings';
-import { StudentData } from '@/model/user-model';
 
 export interface CardListBookingProps {
     listBookings: ListBooking[];
@@ -19,6 +18,7 @@ export interface CardListBookingProps {
 type StudentBookingStatus =
     | 'pendente_aprovacao'
     | 'reservado'
+    | 'negado_inatividade'
     | 'negado_mentor'
     | 'cancelado_mentor';
 
@@ -83,7 +83,9 @@ export function CardListBookingStudent({
         description?: string,
     ) {
         if (
-            (status === 'negado_mentor' || status === 'cancelado_mentor') &&
+            (status === 'negado_mentor' ||
+                status === 'cancelado_mentor' ||
+                status === 'negado_inatividade') &&
             description
         ) {
             return (
@@ -167,9 +169,9 @@ export function CardListBookingStudent({
                         <div className="flex items-center gap-2">
                             <div className="w-2 h-2 rounded-full bg-[#f0e087] animate-pulse" />
                             <span className="text-white/70 text-sm font-medium">
-                                {listBookings.length} aula
-                                {listBookings.length > 1 ? 's' : ''} agendada
-                                {listBookings.length > 1 ? 's' : ''}
+                                {listBookings.length === 1 ? 'Notificação': ''} 
+                                {listBookings.length > 1 ? 'Notificações' : ''}
+                               
                             </span>
                         </div>
                     </div>

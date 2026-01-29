@@ -86,6 +86,9 @@ export function ScheduleGrid({ agenda, mentor }: ScheduleGridProps) {
             return 'bg-gradient-to-br from-emerald-700 via-emerald-800 to-gray-300';
 
         if (slot.status === 'no_show') return 'bg-gray-200  hover:bg-gray-300';
+        // NOVO STATUS ADD MODIFICAR TODO O FRONT PARA LIDAR COM O STATUS
+        if (slot.status === 'negado_inatividade') return 'bg-black hover:bg-black/50';
+        
 
         if (slot.status === 'empty') return 'bg-blue-600 hover:bg-blue-700';
         return 'bg-blue-600 hover:bg-blue-700';
@@ -103,6 +106,8 @@ export function ScheduleGrid({ agenda, mentor }: ScheduleGridProps) {
                 return 'bg-pink-600 text-white';
             case 'no_show':
                 return 'bg-gray-500 text-white';
+            case 'negado_inatividade':
+                return 'bg-black text-white'
             case 'concluido':
                 return 'bg-gradient-to-br from-emerald-700 via-emerald-800 to-gray-300 text-black';
             default:
@@ -127,6 +132,7 @@ export function ScheduleGrid({ agenda, mentor }: ScheduleGridProps) {
             [
                 'negado_mentor',
                 'negado_aluno',
+                'negado_inatividade',
                 'cancelado_mentor',
                 'cancelado_aluno',
             ].includes(slot.status)
@@ -143,6 +149,7 @@ export function ScheduleGrid({ agenda, mentor }: ScheduleGridProps) {
                 'negado_aluno',
                 'negado_mentor',
                 'cancelado_mentor',
+                'negado_inatividade',
                 'cancelado_aluno',
                 'no_show',
             ].includes(slot.status)

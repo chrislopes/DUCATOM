@@ -7,6 +7,7 @@ export type BackendSlotStatus =
     | 'negado_aluno'
     | 'cancelado_mentor'
     | 'cancelado_aluno'
+    | 'negado_inatividade'
     | 'no_show'
     | 'concluido';
 

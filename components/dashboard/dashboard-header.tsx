@@ -1,26 +1,19 @@
 'use client';
 
-import {
-    Menu,
-    User,
-    Calendar,
-    BookOpen,
-    TrendingUp,
-    LogOut,
-    X,
-} from 'lucide-react';
+import { Menu, Calendar, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
     Sheet,
     SheetContent,
     SheetTrigger,
     SheetHeader,
     SheetTitle,
-    SheetClose,
 } from '@/components/ui/sheet';
+import { useAuth } from '@/contexts/auth-context';
 
 export function DashboardHeader() {
+    const { user } = useAuth();
+
     return (
         <header className="sticky top-0 z-50 bg-[#083d71] border-b border-[#0a5491] px-4 py-4 md:px-8">
             <div className="flex items-center justify-between lg:max-w-4xl lg:mx-auto">
@@ -44,70 +37,59 @@ export function DashboardHeader() {
                                 <SheetTitle className="text-[#f0e087] text-xl font-bold">
                                     Menu
                                 </SheetTitle>
-                                <SheetClose asChild>
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="text-white hover:bg-[#0a5491] h-8 w-8"
-                                    >
-                                        <X className="h-5 w-5" />
-                                    </Button>
-                                </SheetClose>
                             </div>
                         </SheetHeader>
 
                         <nav className="flex flex-col gap-2 mt-8">
-                            <a
-                                href="#"
-                                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-[#0a5491] transition-all group"
-                            >
-                                <Calendar className="h-5 w-5 text-[#f0e087]" />
-                                <span className="text-base font-medium group-hover:text-[#f0e087] transition-colors">
-                                    Agendar Aula
-                                </span>
-                            </a>
+                            {user?.role === 'STUDENT' && (
+                                <>
+                                    <a
+                                        href="/selecionar-mentor"
+                                        className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-[#0a5491] transition-all group"
+                                    >
+                                        <Calendar className="h-5 w-5 text-[#f0e087]" />
+                                        <span className="text-base font-medium group-hover:text-[#f0e087] transition-colors">
+                                            Agendar Aula
+                                        </span>
+                                    </a>
 
-                            <a
-                                href="#"
-                                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-[#0a5491] transition-all group"
-                            >
-                                <BookOpen className="h-5 w-5 text-[#f0e087]" />
-                                <span className="text-base font-medium group-hover:text-[#f0e087] transition-colors">
-                                    Materiais Didáticos
-                                </span>
-                            </a>
+                                    <a
+                                        href="/materiais-didaticos"
+                                        className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-[#0a5491] transition-all group"
+                                    >
+                                        <BookOpen className="h-5 w-5 text-[#f0e087]" />
+                                        <span className="text-base font-medium group-hover:text-[#f0e087] transition-colors">
+                                            Materiais Didáticos
+                                        </span>
+                                    </a>
+                                </>
+                            )}
 
-                            <a
-                                href="#"
-                                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-[#0a5491] transition-all group"
-                            >
-                                <TrendingUp className="h-5 w-5 text-[#f0e087]" />
-                                <span className="text-base font-medium group-hover:text-[#f0e087] transition-colors">
-                                    Progresso do Aluno
-                                </span>
-                            </a>
+                            {user?.role === 'MENTOR' && (
+                                <>
+                                    <a
+                                        href="/controle-agenda"
+                                        className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-[#0a5491] transition-all group"
+                                    >
+                                        <Calendar className="h-5 w-5 text-[#f0e087]" />
+                                        <span className="text-base font-medium group-hover:text-[#f0e087] transition-colors">
+                                            Controle da agenda
+                                        </span>
+                                    </a>
+
+                                    <a
+                                        href="/materiais-didaticos"
+                                        className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-[#0a5491] transition-all group"
+                                    >
+                                        <BookOpen className="h-5 w-5 text-[#f0e087]" />
+                                        <span className="text-base font-medium group-hover:text-[#f0e087] transition-colors">
+                                            Materiais Didáticos
+                                        </span>
+                                    </a>
+                                </>
+                            )}
 
                             <div className="border-t border-[#0a5491] my-4"></div>
-
-                            <a
-                                href="#"
-                                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-[#0a5491] transition-all group"
-                            >
-                                <User className="h-5 w-5 text-[#f0e087]" />
-                                <span className="text-base font-medium group-hover:text-[#f0e087] transition-colors">
-                                    Meu Perfil
-                                </span>
-                            </a>
-
-                            <a
-                                href="/"
-                                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-900/20 transition-all group mt-2"
-                            >
-                                <LogOut className="h-5 w-5 text-red-400" />
-                                <span className="text-base font-medium text-red-400 group-hover:text-red-300 transition-colors">
-                                    Sair
-                                </span>
-                            </a>
                         </nav>
                     </SheetContent>
                 </Sheet>
@@ -122,14 +104,6 @@ export function DashboardHeader() {
                         Jornada Musical
                     </span>
                 </div>
-
-                {/* Avatar do usuário */}
-                <Avatar className="h-10 w-10 cursor-pointer hover:ring-2 hover:ring-[#f0e087] transition-all">
-                    <AvatarImage src="/placeholder-user.jpg" alt="Usuário" />
-                    <AvatarFallback className="bg-[#0a5491] text-white">
-                        <User className="h-5 w-5" />
-                    </AvatarFallback>
-                </Avatar>
             </div>
         </header>
     );

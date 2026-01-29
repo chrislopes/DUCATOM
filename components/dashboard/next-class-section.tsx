@@ -27,6 +27,7 @@ export function NextClassSection({
             pendente_aprovacao: 'bg-yellow-500/20 text-yellow-300',
             reservado: 'bg-purple-600/20 text-purple-300',
             negado_mentor: 'bg-stone-500/20 text-stone-300',
+            negado_inatividade: 'bg-black text-white',
             cancelado_mentor: 'bg-red-800/20 text-red-300',
         };
 

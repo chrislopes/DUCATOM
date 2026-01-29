@@ -39,10 +39,10 @@ export function DashboardNavigation() {
                 Materiais Didáticos
             </Button>
 
-            <Button className="w-full bg-[#0a5491] hover:bg-[#0d6bb8] text-white font-semibold text-base cursor-pointer md:text-lg py-6 md:py-7 rounded-lg transition-colors">
+            {/* <Button className="w-full bg-[#0a5491] hover:bg-[#0d6bb8] text-white font-semibold text-base cursor-pointer md:text-lg py-6 md:py-7 rounded-lg transition-colors">
                 <TrendingUp className="mr-2 h-5 w-5" />
                 Progresso do Aluno
-            </Button>
+            </Button> */}
         </nav>
     );
 }
