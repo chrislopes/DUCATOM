@@ -78,7 +78,7 @@ export function SubmitLessonContent({
             `Olá!\n*Mentor:* ${mentorUser.nome}\n*ID:* ${mentorUser.id}\n*Nivel:* ${mentorUser.nivel}\n*Especialidade:* ${mentorUser.especialidade} \n\nEstou enviando o vídeo da aula:\n\n*Módulo:* ${module}\n*Aula:* ${lesson}\n*Título:* ${name}\n\nSegue abaixo o video!`,
         );
 
-        const whatsappNumber = '5511918901865'; // número do admin
+        const whatsappNumber = '5511923746268'; 
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
         window.open(whatsappUrl, '_blank');

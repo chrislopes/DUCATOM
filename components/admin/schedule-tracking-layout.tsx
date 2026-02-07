@@ -117,7 +117,7 @@ export function ScheduleTrackingLayout() {
                             <div className="h-80 bg-[#0a4d8f]/30 rounded-xl animate-pulse" />
                         )}
 
-                        <div className="w-full flex justify-end">
+                        <div className="w-full flex justify-center sm:justify-end">
                             <Card className="w-full max-w-xs border-none sm:max-w-sm bg-[#083d71] p-1">
                                 
                                 <CardContent className="p-0">
@@ -173,7 +173,7 @@ export function ScheduleTrackingLayout() {
                                             </div>
 
                                             <div className="flex items-center gap-2">
-                                                <span className="w-4 h-4 rounded-sm bg-gradient-to-br from-emerald-700 via-emerald-800 to-gray-300" />
+                                                <span className="w-4 h-4 rounded-sm bg-linear-to-br from-emerald-700 via-emerald-800 to-gray-300" />
                                                 <span className="text-white">
                                                     Concluído
                                                 </span>

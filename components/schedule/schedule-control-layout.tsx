@@ -52,19 +52,16 @@ export function ScheduleControlLayout() {
         }
     }, []);
 
-    // 📌 Abre o Dialog e guarda o ID do slot
     const handleRemoveTimeSlot = (id: number) => {
         setSelectedSlotId(id);
         setOpenDialog(true);
     };
 
-    // 📌 Confirma remoção
     const confirmDelete = async () => {
         if (!selectedSlotId) return;
 
         await deleteTimeSlot(selectedSlotId);
 
-        // Recarrega lista
         if (!mentorUser?.id) {
             throw new Error('ID do mentor não encontrado');
         }
@@ -80,16 +77,14 @@ export function ScheduleControlLayout() {
                 JSON.stringify({
                     ...mentorUser,
                     agenda_publicada: false,
-                })
+                }),
             );
         }
 
-        // Fecha modal e limpa estado
         setOpenDialog(false);
         setSelectedSlotId(null);
     };
 
-    // 📌 CONFIRMAR AGENDA (PUBLICAÇÃO OFICIAL)
     const handleConfirmAgenda = async () => {
         if (!mentorUser?.id) {
             console.error('Mentor ID não encontrado no localStorage');
@@ -108,7 +103,7 @@ export function ScheduleControlLayout() {
             JSON.stringify({
                 ...mentorUser,
                 agenda_publicada: true,
-            })
+            }),
         );
     };
 
@@ -133,7 +128,26 @@ export function ScheduleControlLayout() {
                 )}
 
                 <div className="flex flex-col justify-center items-center py-2">
-                    <h2 className="text-white text-2xl font-bold">
+                    <div className="w-full border rounded p-4">
+                        <span className="text-sm text-white py-3">
+                            <p className="w-full text-lg font-bold text-center text-red-500">
+                                Atenção
+                            </p>
+                            <p className="text-center text-base">
+                                Sempre que adicionar uma nova data com horário,
+                                clique em
+                            </p>
+                            <h5 className="mx-1 text-center text-lg font-bold text-[#f0e087]">
+                                “Confirmar agenda”
+                            </h5>
+                            <p className="text-center text-base">
+                                Para que o horário fique visível para os alunos.
+                                Horários não confirmados não serão exibidos.
+                            </p>
+                        </span>
+                    </div>
+
+                    <h2 className="text-white text-2xl font-bold p-2">
                         Sua agenda está:
                     </h2>
                     <span
@@ -159,7 +173,9 @@ export function ScheduleControlLayout() {
                     <DialogHeader>
                         <DialogTitle>Confirmar exclusão</DialogTitle>
                         <DialogDescription>
-                            Tem certeza que deseja remover este horário?<br /> Lembrando, caso sua agenda tenha menos de 6 horários disponíveis, ela deixará de ser divulgada.
+                            Tem certeza que deseja remover este horário?
+                            <br /> Lembrando, caso sua agenda tenha menos de 6
+                            horários disponíveis, ela deixará de ser divulgada.
                         </DialogDescription>
                     </DialogHeader>
 

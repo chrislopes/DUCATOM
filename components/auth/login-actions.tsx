@@ -11,7 +11,7 @@ export function LoginActions({ onSubmit, loading }: LoginActionsProps) {
                 <Button
                     onClick={onSubmit}
                     disabled={loading}
-                    className="w-full bg-[#f0e087] hover:bg-[#e5d677] text-[#083d71] font-semibold h-12 md:h-14 text-base md:text-lg rounded-full"
+                    className="w-full bg-[#f0e087] hover:bg-[#e5d677] text-[#083d71] font-semibold h-12 cursor-pointer md:h-14 text-base md:text-lg rounded-full"
                 >
                     {loading ? 'Entrando...' : 'Fazer Login na Conta'}
                 </Button>

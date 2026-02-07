@@ -58,7 +58,7 @@ export function ValidateLessonsLayout() {
 
     return (
         <div className="min-h-screen bg-[#083d71] flex flex-col">
-            <div className="flex-1 flex flex-col p-4 md:p-8 max-w-4xl mx-auto w-full">
+            <div className="flex-1 flex flex-col p-4 md:p-8  mx-auto w-full">
                 <ValidateLessonsHeader
                     isAdmin={isAdmin}
                     onMentorSelect={setSelectedMentorId}

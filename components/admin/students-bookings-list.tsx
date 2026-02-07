@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -22,8 +22,6 @@ interface StudentsHistoryProps {
 export function StudentsBookingsList({ studentId }: StudentsHistoryProps) {
     const { loading, getHistoryStudentByIdHook, studentBookingId } =
         useDashboardAdmin();
-
-    const didRun = useRef(false);
 
     useEffect(() => {
         if (!studentId) return;
@@ -66,8 +64,8 @@ export function StudentsBookingsList({ studentId }: StudentsHistoryProps) {
                 };
             case 'no_show':
                 return {
-                    label: 'Ausência na aula marcada',
-                    color: 'bg-gray-200 text-white font-semibold border-gray-500',
+                    label: 'No-show (conflito)',
+                    color: 'bg-linear-to-r from-[#8B2F4E] to-[#4B1F3A] text-white font-semibold border-gray-500',
                     icon: XCircle,
                 };
             case 'reservado':
@@ -76,10 +74,16 @@ export function StudentsBookingsList({ studentId }: StudentsHistoryProps) {
                     color: 'bg-purple-600 text-white font-semibold border-purple-500',
                     icon: BookOpenCheck,
                 };
+            case 'negado_inatividade':
+                return {
+                    label: 'Negado por inatividade',
+                    color: 'bg-black text-white font-semibold border-white',
+                    icon: BookOpenCheck,
+                };
             case 'concluido':
                 return {
                     label: 'Aula concluída',
-                    color: 'bg-green-600 text-white font-semibold border-green-500',
+                    color: 'bg-linear-to-br from-emerald-700 via-emerald-800 to-gray-300 text-white font-semibold border-green-500',
                     icon: BadgeCheck,
                 };
             default:
@@ -98,8 +102,9 @@ export function StudentsBookingsList({ studentId }: StudentsHistoryProps) {
                 <p className="text-gray-300 text-sm">Carregando histórico...</p>
             )}
 
+            {/* Nenhum aluno selecionado */}
             {!loading && studentId === null && (
-                <div className="flex flex-col items-center justify-center min-h-[400px] bg-[#0a4d8f]/30 rounded-xl border-2 border-dashed border-[#0a4d8f] p-8">
+                <div className="flex flex-col items-center justify-center min-h-[300px] sm:min-h-[400px] bg-[#0a4d8f]/30 rounded-xl border-2 border-dashed border-[#0a4d8f] p-6 sm:p-8">
                     <div className="text-center space-y-4 max-w-md">
                         <div className="w-16 h-16 mx-auto bg-[#0a4d8f] rounded-full flex items-center justify-center">
                             <svg
@@ -133,76 +138,98 @@ export function StudentsBookingsList({ studentId }: StudentsHistoryProps) {
             {!loading &&
                 studentId != null &&
                 studentBookingId?.length === 0 && (
-                    <div className="flex flex-col items-center justify-center min-h-[300px] bg-[#0a4d8f]/20 rounded-xl border border-[#0a4d8f] p-6">
-                        <h3 className="text-xl font-semibold text-[#f0e087]">
+                    <div className="flex flex-col items-center justify-center min-h-[250px] bg-[#0a4d8f]/20 rounded-xl border border-[#0a4d8f] p-6 text-center">
+                        <h3 className="text-lg sm:text-xl font-semibold text-[#f0e087]">
                             Nenhum agendamento encontrado para este aluno.
                         </h3>
                     </div>
                 )}
 
-            {/* Lista de Bookings */}
-            <div className="space-y-3 max-h-[400px] overflow-y-hidden hover:overflow-y-auto pr-2 custom-scroll transition-all">
-                {studentBookingId?.map((booking) => {
-                    const statusInfo = getStatusInfo(booking.status);
-                    const StatusIcon = statusInfo.icon;
-                    return (
-                        <Card
-                            key={booking.booking_id}
-                            className="bg-[#0a4d8f]/30 border-[#0a4d8f] p-4 hover:bg-[#0a4d8f]/50 transition-all duration-200"
-                        >
-                            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                                <div className="flex items-start gap-4 flex-1">
-                                    {/* Avatar */}
-                                    <div className="w-12 h-12 rounded-full bg-[#f0e087]/20 flex items-center justify-center flex-shrink-0">
-                                        <GraduationCap className="h-6 w-6 text-[#f0e087]" />
-                                    </div>
+            {/* ================= LISTA DE BOOKINGS ================= */}
+            {studentBookingId && studentBookingId.length > 0 && (
+                <div
+                    className="
+                    space-y-3
+                    overflow-y-auto
+                    pr-2
+                    custom-scroll
+                    max-h-none
+                    md:max-h-[420px]
+                    lg:max-h-[500px]
+                "
+                >
+                    {studentBookingId.map((booking) => {
+                        const statusInfo = getStatusInfo(booking.status);
+                        const StatusIcon = statusInfo.icon;
 
-                                    {/* Dados */}
-                                    <div className="flex-1 min-w-0">
-                                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
-                                            <h3 className="font-semibold text-white truncate">
-                                                {booking.aluno_nome}
-                                            </h3>
-
-                                            <Badge
-                                                variant="outline"
-                                                className={`${statusInfo.color} border w-fit`}
-                                            >
-                                                <StatusIcon className="h-3 w-3 mr-1" />
-                                                {statusInfo.label}
-                                            </Badge>
+                        return (
+                            <Card
+                                key={booking.booking_id}
+                                className="
+                                bg-[#0a4d8f]/30
+                                border-[#0a4d8f]
+                                p-4
+                                hover:bg-[#0a4d8f]/50
+                                transition-all
+                                duration-200
+                            "
+                            >
+                                <div className="flex flex-col gap-4">
+                                    <div className="flex items-start gap-4">
+                                        {/* Avatar */}
+                                        <div className="w-12 h-12 rounded-full bg-[#f0e087]/20 flex items-center justify-center flex-shrink-0">
+                                            <GraduationCap className="h-6 w-6 text-[#f0e087]" />
                                         </div>
 
-                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
-                                            <div className="flex items-center gap-2 text-gray-300">
-                                                <User className="h-4 w-4 text-[#f0e087]" />
-                                                <span className="truncate">
-                                                    Mentor:{' '}
-                                                    {booking.mentor_nome}
-                                                </span>
+                                        {/* Conteúdo */}
+                                        <div className="flex-1 min-w-0">
+                                            {/* Nome + Status */}
+                                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                                                <h3 className="font-semibold text-white truncate">
+                                                    {booking.aluno_nome}
+                                                </h3>
+
+                                                <Badge
+                                                    variant="outline"
+                                                    className={`${statusInfo.color} border w-fit`}
+                                                >
+                                                    <StatusIcon className="h-3 w-3 mr-1" />
+                                                    {statusInfo.label}
+                                                </Badge>
                                             </div>
 
-                                            <div className="flex items-center gap-2 text-gray-300">
-                                                <Calendar className="h-4 w-4 text-[#f0e087]" />
-                                                <span>
-                                                    {booking.booking_date}
-                                                </span>
-                                            </div>
+                                            {/* Infos */}
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-sm">
+                                                <div className="flex items-center gap-2 text-gray-300">
+                                                    <User className="h-4 w-4 text-[#f0e087]" />
+                                                    <span className="truncate">
+                                                        Mentor:{' '}
+                                                        {booking.mentor_nome}
+                                                    </span>
+                                                </div>
 
-                                            <div className="flex items-center gap-2 text-gray-300">
-                                                <Clock className="h-4 w-4 text-[#f0e087]" />
-                                                <span>
-                                                    {booking.start_time}
-                                                </span>
+                                                <div className="flex items-center gap-2 text-gray-300">
+                                                    <Calendar className="h-4 w-4 text-[#f0e087]" />
+                                                    <span>
+                                                        {booking.booking_date}
+                                                    </span>
+                                                </div>
+
+                                                <div className="flex items-center gap-2 text-gray-300">
+                                                    <Clock className="h-4 w-4 text-[#f0e087]" />
+                                                    <span>
+                                                        {booking.start_time}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </Card>
-                    );
-                })}
-            </div>
+                            </Card>
+                        );
+                    })}
+                </div>
+            )}
         </div>
     );
 }

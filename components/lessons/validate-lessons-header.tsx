@@ -1,5 +1,5 @@
 import { Mentor, MentorData, UserModel } from '@/model/user-model';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, LogOut } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import {
     Select,
@@ -72,8 +72,30 @@ export function ValidateLessonsHeader({
         router.push('/admin/dashboard-admin');
     };
 
+    function logout() {
+        document.cookie =
+            'sb_access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        document.cookie =
+            'sb_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+
+        router.replace('/');
+    }
+
     return (
         <div className="text-center space-y-3">
+            {user?.role === 'MENTOR' && (
+                <div className="w-full flex justify-end">
+                    <Button
+                        onClick={logout}
+                        variant="ghost"
+                        className="w-full md:w-auto flex items-center justify-center gap-2 border border-red-400/40 text-red-300 hover:text-red-200 hover:bg-red-500/20 rounded-xl cursor-pointer px-4 py-2.5 transition-all"
+                    >
+                        <LogOut className="w-5 h-5" />
+                        <span className="hidden sm:inline">Sair</span>
+                    </Button>
+                </div>
+            )}
+
             <div className="w-full flex items-center justify-end">
                 {user?.role === 'ADMIN' && (
                     <TooltipProvider>
@@ -115,14 +137,12 @@ export function ValidateLessonsHeader({
                     </TooltipProvider>
                 )}
             </div>
-
             <div className="flex items-center justify-center gap-3">
                 <GraduationCap className="w-8 h-8 md:w-10 md:h-10 text-[#f0e087]" />
                 <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
                     Validação de Aulas
                 </h1>
             </div>
-
             <div className="inline-block bg-[#0a4d8f] px-6 py-2 rounded-full">
                 <p className="text-[#f0e087] font-semibold text-lg md:text-xl">
                     {adminPersona?.role === 'ADMIN'
@@ -130,7 +150,6 @@ export function ValidateLessonsHeader({
                         : `Nível ${mentorUser?.nivel}`}
                 </p>
             </div>
-
             {isAdmin && (
                 <>
                     <div className="flex items-center justify-end">

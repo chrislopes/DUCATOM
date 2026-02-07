@@ -21,7 +21,7 @@ export function ForgotPasswordActions({
             <Button
                 onClick={onSubmit}
                 disabled={disabled}
-                className="w-full bg-[#f0e087] hover:bg-[#e0d077] text-[#083d71] font-semibold h-12 md:h-14 text-base md:text-lg rounded-full transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#f0e087] hover:bg-[#e0d077] text-[#083d71] font-semibold h-12 md:h-14 text-base md:text-lg rounded-full transition-all duration-300 cursor-pointer hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {loading ? (
                     <>

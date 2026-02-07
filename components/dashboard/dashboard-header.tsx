@@ -10,9 +10,22 @@ import {
     SheetTitle,
 } from '@/components/ui/sheet';
 import { useAuth } from '@/contexts/auth-context';
+import { useRouter } from 'next/navigation';
 
 export function DashboardHeader() {
-    const { user } = useAuth();
+    const router = useRouter();
+    const { user, setUser } = useAuth();
+
+    function logout() {
+        document.cookie =
+            'sb_access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        document.cookie =
+            'sb_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+
+        setUser(null);
+
+        router.replace('/');
+    }
 
     return (
         <header className="sticky top-0 z-50 bg-[#083d71] border-b border-[#0a5491] px-4 py-4 md:px-8">
@@ -93,7 +106,7 @@ export function DashboardHeader() {
 
                             <button
                                 type="button"
-                                // onClick={logout}
+                                onClick={logout}
                                 className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-500/20 transition-all group text-red-300 hover:text-red-200 w-full"
                             >
                                 <LogOut className="h-5 w-5" />
@@ -119,7 +132,7 @@ export function DashboardHeader() {
                 {/* Botão de logout - mobile (ícone) */}
                 <button
                     type="button"
-                    // onClick={logout}
+                    onClick={logout}
                     className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg text-red-300 hover:text-red-200 hover:bg-red-500/20 transition-all"
                     aria-label="Sair"
                 >
@@ -129,7 +142,7 @@ export function DashboardHeader() {
                 {/* Botão de logout - desktop */}
                 <button
                     type="button"
-                    // onClick={logout}
+                    onClick={logout}
                     className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg text-red-300 hover:text-red-200 hover:bg-red-500/20 border border-red-400/30 hover:border-red-400/50 transition-all text-sm cursor-pointer font-medium"
                 >
                     <LogOut className="h-4 w-4" />

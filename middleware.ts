@@ -17,6 +17,9 @@ const ROLE_ROUTES: Record<string, string[]> = {
         '/admin/dashboard-admin',
         '/validacao-aulas',
         '/criar-aluno',
+        '/aula-negada',
+        '/aula-aprovada',
+        '/aula-analise',
         '/criar-mentor',
     ],
 };
@@ -24,7 +27,6 @@ const ROLE_ROUTES: Record<string, string[]> = {
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    // ✅ LIBERAR ASSETS E DOWNLOADS (PDF, imagens, vídeos, etc)
     if (
         pathname.startsWith('/_next') ||
         pathname.startsWith('/favicon') ||
@@ -39,7 +41,6 @@ export function middleware(request: NextRequest) {
     const token = request.cookies.get('sb_access_token')?.value;
     const role = request.cookies.get('sb_role')?.value;
 
-    // ✅ ROTAS PÚBLICAS (bem definidas)
     const PUBLIC_ROUTES = [
         '/',
         '/admin-login',
@@ -52,7 +53,6 @@ export function middleware(request: NextRequest) {
     );
 
     if (isPublicRoute) {
-        // 🔒 Se já estiver logado, evita voltar pro login
         if (token && role && pathname === '/') {
             const fallback =
                 role === 'ADMIN' ? '/admin/dashboard-admin' : '/dashboard';
@@ -63,18 +63,14 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    // ❌ NÃO autenticado → bloqueia QUALQUER rota privada
     if (!token || !role) {
         return NextResponse.redirect(new URL('/', request.url));
     }
 
-    // ❌ Role inválido
     const allowedRoutes = ROLE_ROUTES[role];
     if (!allowedRoutes) {
         return NextResponse.redirect(new URL('/', request.url));
     }
-
-    // ❌ Tentativa de acesso fora da role
     const hasPermission = allowedRoutes.some((route) =>
         pathname.startsWith(route),
     );
@@ -89,10 +85,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
 }
 
-/**
- * 🚨 EXTREMAMENTE IMPORTANTE
- * Evita quebrar JS, CSS, imagens e chunks do Next
- */
+
 export const config = {
     matcher: [
         '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|svg|webp|css|js)).*)',

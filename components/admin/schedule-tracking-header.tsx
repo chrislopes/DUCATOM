@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Calendar } from 'lucide-react';
+import { Calendar, LogOut } from 'lucide-react';
 import {
     Select,
     SelectContent,
@@ -88,12 +88,40 @@ export function ScheduleTrackingHeader({
     }, []);
 
     const handleSwitchScreen = () => {
-        
         router.push('/validacao-aulas');
     };
 
+    function logout() {
+        document.cookie =
+            'sb_access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        document.cookie =
+            'sb_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+
+        router.replace('/');
+    }
+
     return (
         <div className="space-y-4">
+            <div className='w-full flex justify-end'>
+                <Button
+                    onClick={logout}
+                    variant="ghost"
+                    className="
+        w-full md:w-auto
+        flex items-center justify-center gap-2
+        border border-red-400/40
+        text-red-300
+        hover:text-red-200
+        hover:bg-red-500/20
+        rounded-xl cursor-pointer
+        px-4 py-2.5
+        transition-all
+    "
+                >
+                    <LogOut className="w-5 h-5" />
+                    <span className="hidden sm:inline">Sair</span>
+                </Button>
+            </div>
             {/* Logo and Title */}
             <div
                 className="
@@ -109,21 +137,21 @@ export function ScheduleTrackingHeader({
                                 <Button
                                     onClick={handleSwitchScreen}
                                     className=" cursor-pointer
-              w-full md:w-auto
-              bg-linear-to-r
-              from-[#f0e087]
-              to-[#d4c474]
-              hover:from-[#d4c474]
-              hover:to-[#f0e087]
-              text-[#083d71]
-              font-semibold
-              px-4 py-2.5
-              rounded-xl
-              shadow-lg
-              hover:shadow-xl
-              transition-all duration-300
-              flex items-center justify-center gap-2
-            "
+                                                w-full md:w-auto
+                                                bg-linear-to-r
+                                                from-[#f0e087]
+                                                to-[#d4c474]
+                                                hover:from-[#d4c474]
+                                                hover:to-[#f0e087]
+                                                text-[#083d71]
+                                                font-semibold
+                                                px-4 py-2.5
+                                                rounded-xl
+                                                shadow-lg
+                                                hover:shadow-xl
+                                                transition-all duration-300
+                                                flex items-center justify-center gap-2
+                                            "
                                 >
                                     <ArrowRightLeft className="w-5 h-5" />
                                     <span className="hidden sm:inline">
