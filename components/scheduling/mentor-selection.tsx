@@ -34,7 +34,7 @@ export function MentorSelection() {
 
     const didRun = useRef(false);
 
-    // 🔹 1. Carrega aluno + mentores
+   
     useEffect(() => {
         if (didRun.current) return;
         didRun.current = true;
@@ -49,13 +49,13 @@ export function MentorSelection() {
         listMentor();
     }, []);
 
-    // 🔹 2. Busca favoritos quando o aluno existir
+
     useEffect(() => {
         if (!studentData?.id) return;
         searchMentorFavorite(studentData.id);
     }, [studentData]);
 
-    // 🔹 3. Mescla mentores + favoritos
+   
     useEffect(() => {
         if (!mentores || mentores.length === 0) return;
 
@@ -92,7 +92,7 @@ export function MentorSelection() {
 
         const novoFavorito = !mentor.isFavorite;
 
-        // 🔹 Atualização otimista
+        
         setMentors((prev) =>
             prev.map((m) =>
                 m.id === mentorId ? { ...m, isFavorite: novoFavorito } : m,
@@ -106,7 +106,7 @@ export function MentorSelection() {
         );
 
         if (!result) {
-            // 🔴 rollback
+           
             setMentors((prev) =>
                 prev.map((m) =>
                     m.id === mentorId ? { ...m, isFavorite: !novoFavorito } : m,

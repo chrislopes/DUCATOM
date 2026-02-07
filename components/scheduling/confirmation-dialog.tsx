@@ -45,7 +45,6 @@ export function ConfirmationDialog({
 
     const { studentBookingWithMentor, loading } = useRPC_Bookings();
 
-    // Filtra os horários do dia selecionado
     const timesForDay =
         selectedDay !== null
             ? mentor.agenda_mentor
@@ -78,6 +77,7 @@ export function ConfirmationDialog({
 
         resetState();
         onClose();
+        router.push('/dashboard');
     };
 
     const handleCancel = () => {
@@ -111,7 +111,7 @@ export function ConfirmationDialog({
                         <Select
                             onValueChange={(val) => {
                                 setSelectedDay(Number(val));
-                                setSelectedTime(null); // limpa horário ao mudar o dia
+                                setSelectedTime(null);
                             }}
                         >
                             <SelectTrigger className="w-[200px] bg-[#083d71]/80 border border-[#0d6bb8]/60 text-white rounded-lg hover:bg-[#083d71] focus:ring-1 focus:ring-[#f0e087]/60 focus:border-[#f0e087]/60 transition-colors flex items-center gap-2">
@@ -133,7 +133,7 @@ export function ConfirmationDialog({
                                             mentor.agenda_mentor.some(
                                                 (a) => a.weekday === idx,
                                             );
-                                        if (!hasTimes) return null; // mostra só dias com horários
+                                        if (!hasTimes) return null;
 
                                         return (
                                             <SelectItem
@@ -149,10 +149,9 @@ export function ConfirmationDialog({
                             </SelectContent>
                         </Select>
 
-                        {/* Select Horário */}
                         <Select
                             onValueChange={(val) => setSelectedTime(val)}
-                            disabled={selectedDay === null} // bloqueado até escolher o dia
+                            disabled={selectedDay === null}
                         >
                             <SelectTrigger
                                 className={`w-[200px] bg-[#083d71]/80 border border-[#0d6bb8]/60 text-white rounded-lg hover:bg-[#083d71] focus:ring-1 focus:ring-[#f0e087]/60 focus:border-[#f0e087]/60 transition-colors flex items-center gap-2 ${
@@ -196,7 +195,6 @@ export function ConfirmationDialog({
                 </DialogHeader>
 
                 <div className="flex items-center justify-center gap-6 mt-6">
-                    {/* Cancelar */}
                     <Button
                         onClick={handleCancel}
                         variant="ghost"
@@ -209,7 +207,6 @@ export function ConfirmationDialog({
                         />
                     </Button>
 
-                    {/* Confirmar */}
                     <Button
                         onClick={handleConfirm}
                         variant="ghost"

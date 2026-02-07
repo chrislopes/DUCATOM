@@ -17,7 +17,7 @@ export function MentorList({
 }: MentorListProps) {
     return (
         <div className="space-y-8 mb-8">
-            {/* Hoje */}
+          
             {todayMentors.length > 0 && (
                 <section>
                     <div className="space-y-3">
@@ -35,7 +35,7 @@ export function MentorList({
                 </section>
             )}
 
-            {/* Amanhã */}
+           
             {tomorrowMentors.length > 0 && (
                 <section>
                     <h2 className="text-white text-lg md:text-xl font-semibold mb-4">
@@ -56,7 +56,7 @@ export function MentorList({
                 </section>
             )}
 
-            {/* Nenhum mentor disponível */}
+            
             {todayMentors.length === 0 && tomorrowMentors.length === 0 && (
                 <div className="text-center py-12">
                     <p className="text-white/60 text-base md:text-lg">
