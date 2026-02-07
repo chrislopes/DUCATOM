@@ -1,6 +1,6 @@
 import type React from 'react';
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { PageTransition } from '@/components/ui/page-transition';
@@ -8,8 +8,10 @@ import { Toaster } from '@/components/ui/sonner';
 import { AuthProvider } from '@/contexts/auth-context';
 import { MentorWeekdayProvider } from '@/contexts/MentorWeekdayContext';
 
-const _geist = Geist({ subsets: ['latin'] });
-const _geistMono = Geist_Mono({ subsets: ['latin'] });
+const inter = Inter({
+    subsets: ['latin'],
+    variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
     title: 'Ducatom - Sua Jornada Musical',
@@ -41,7 +43,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="pt-BR">
-            <body className={`font-sans antialiased`}>
+            <body className={inter.className}>
                 <AuthProvider>
                     <MentorWeekdayProvider>
                         <PageTransition>{children}</PageTransition>
