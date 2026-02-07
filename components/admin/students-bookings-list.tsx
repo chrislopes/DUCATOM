@@ -177,7 +177,7 @@ export function StudentsBookingsList({ studentId }: StudentsHistoryProps) {
                                 <div className="flex flex-col gap-4">
                                     <div className="flex items-start gap-4">
                                         {/* Avatar */}
-                                        <div className="w-12 h-12 rounded-full bg-[#f0e087]/20 flex items-center justify-center flex-shrink-0">
+                                        <div className="w-12 h-12 rounded-full bg-[#f0e087]/20 flex items-center justify-center shrink-0">
                                             <GraduationCap className="h-6 w-6 text-[#f0e087]" />
                                         </div>
 

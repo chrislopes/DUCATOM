@@ -15,11 +15,9 @@ const supabase = createClient(
 // CORS
 // ======================================================
 function getCorsHeaders(origin: string | null): Record<string, string> {
-    const allowedOrigins = [
+     const allowedOrigins = [
         'http://localhost:3000',
-
-        // 👉 QUANDO HOSPEDAR O FRONT
-        // 'https://seu-front.vercel.app',
+        'https://ducatom.vercel.app',
     ];
 
     const allowOrigin =
