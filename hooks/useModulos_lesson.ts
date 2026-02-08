@@ -23,9 +23,7 @@ export function useModuleLessonMentor() {
 
         setLoading(true);
         try {
-            /**
-             * 1️⃣ BUSCAR MÓDULOS
-             */
+            
             const moduleResponse = await searchModulosService();
 
             if (!moduleResponse.success) {
@@ -35,9 +33,7 @@ export function useModuleLessonMentor() {
                 return;
             }
 
-            /**
-             * 2️⃣ BUSCAR AULAS DE CADA MÓDULO
-             */
+           
             const modulesWithLessons: Module[] = await Promise.all(
                 moduleResponse.data.map(async (modulo: any) => {
                     const lessonResponse = await searchLessonService(
@@ -101,9 +97,7 @@ export function useControlLessonMentor() {
         null,
     );
 
-    /**
-     * 🔎 BUSCA progresso da aula do mentor
-     */
+    
     async function fetchMentorLesson(aula_id: number, mentor_id: number) {
         if (!aula_id || !mentor_id) {
             toast.error('Aula ou mentor não informado');
@@ -130,9 +124,7 @@ export function useControlLessonMentor() {
         }
     }
 
-    /**
-     * 📝 CRIA progresso da aula (1ª vez)
-     */
+  
     async function createMentorLesson(aula_id: number, mentor_id: number) {
         if (!aula_id || !mentor_id) {
             toast.error('Aula ou mentor não informado');
@@ -159,9 +151,7 @@ export function useControlLessonMentor() {
         }
     }
 
-    /**
-     * 🧠 GARANTE que o registro exista (GET → POST)
-     */
+   
     async function ensureMentorLesson(aula_id: number, mentor_id: number) {
         const existing = await fetchMentorLesson(aula_id, mentor_id);
 

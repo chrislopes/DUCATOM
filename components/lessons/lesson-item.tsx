@@ -4,7 +4,6 @@ import { FileText, CheckCircle, XCircle, Clock, Loader2 } from 'lucide-react';
 import type { Lesson } from './validate-lessons-layout';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { useDashboardUser } from '@/hooks/useDashboard';
 import { useControlLessonMentor } from '@/hooks/useModulos_lesson';
 import { MentorData, UserModel } from '@/model/user-model';
 

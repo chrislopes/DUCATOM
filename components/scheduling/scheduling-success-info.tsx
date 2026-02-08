@@ -6,7 +6,7 @@ import { Calendar, Clock } from 'lucide-react';
 export function SchedulingSuccessInfo() {
     return (
         <div className="w-full grid grid-cols-2 gap-4">
-            {/* Card de Data */}
+         
             <Card className="bg-[#0a5491] border-[#0d6bb8] border-2 p-6 flex flex-col items-center justify-center space-y-3 hover:bg-[#0d6bb8] transition-colors">
                 <Calendar
                     className="h-12 w-12 md:h-14 md:w-14 text-[#f0e087]"
@@ -22,7 +22,6 @@ export function SchedulingSuccessInfo() {
                 </div>
             </Card>
 
-            {/* Card de Horário */}
             <Card className="bg-[#0a5491] border-[#0d6bb8] border-2 p-6 flex flex-col items-center justify-center space-y-3 hover:bg-[#0d6bb8] transition-colors">
                 <Clock
                     className="h-12 w-12 md:h-14 md:w-14 text-[#f0e087]"

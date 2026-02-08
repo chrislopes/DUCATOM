@@ -29,7 +29,6 @@ export function StudentsBookingsList({ studentId }: StudentsHistoryProps) {
         getHistoryStudentByIdHook(studentId);
     }, [studentId]);
 
-    // Função para obter cor e texto do status
     const getStatusInfo = (status: string) => {
         switch (status) {
             case 'pendente_aprovacao':
@@ -97,12 +96,11 @@ export function StudentsBookingsList({ studentId }: StudentsHistoryProps) {
 
     return (
         <div className="space-y-6">
-            {/* Loading */}
+         
             {loading && (
                 <p className="text-gray-300 text-sm">Carregando histórico...</p>
             )}
 
-            {/* Nenhum aluno selecionado */}
             {!loading && studentId === null && (
                 <div className="flex flex-col items-center justify-center min-h-[300px] sm:min-h-[400px] bg-[#0a4d8f]/30 rounded-xl border-2 border-dashed border-[#0a4d8f] p-6 sm:p-8">
                     <div className="text-center space-y-4 max-w-md">
@@ -134,7 +132,6 @@ export function StudentsBookingsList({ studentId }: StudentsHistoryProps) {
                 </div>
             )}
 
-            {/* Vazio */}
             {!loading &&
                 studentId != null &&
                 studentBookingId?.length === 0 && (
@@ -145,7 +142,6 @@ export function StudentsBookingsList({ studentId }: StudentsHistoryProps) {
                     </div>
                 )}
 
-            {/* ================= LISTA DE BOOKINGS ================= */}
             {studentBookingId && studentBookingId.length > 0 && (
                 <div
                     className="
@@ -176,14 +172,13 @@ export function StudentsBookingsList({ studentId }: StudentsHistoryProps) {
                             >
                                 <div className="flex flex-col gap-4">
                                     <div className="flex items-start gap-4">
-                                        {/* Avatar */}
+                                        
                                         <div className="w-12 h-12 rounded-full bg-[#f0e087]/20 flex items-center justify-center shrink-0">
                                             <GraduationCap className="h-6 w-6 text-[#f0e087]" />
                                         </div>
 
-                                        {/* Conteúdo */}
                                         <div className="flex-1 min-w-0">
-                                            {/* Nome + Status */}
+                                            
                                             <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
                                                 <h3 className="font-semibold text-white truncate">
                                                     {booking.aluno_nome}
@@ -198,7 +193,7 @@ export function StudentsBookingsList({ studentId }: StudentsHistoryProps) {
                                                 </Badge>
                                             </div>
 
-                                            {/* Infos */}
+                                           
                                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-sm">
                                                 <div className="flex items-center gap-2 text-gray-300">
                                                     <User className="h-4 w-4 text-[#f0e087]" />

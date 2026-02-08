@@ -135,7 +135,7 @@ export function CardListBookingStudent({
 
     return (
         <>
-            {/* SEM EVENTOS */}
+            
             {listBookings?.length === 0 && (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
                     <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/10">
@@ -161,10 +161,10 @@ export function CardListBookingStudent({
                 </div>
             )}
 
-            {/* LISTA DE AULAS */}
+            
             {listBookings?.length > 0 && (
                 <div className="space-y-1">
-                    {/* Header */}
+                  
                     <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/10">
                         <div className="flex items-center gap-2">
                             <div className="w-2 h-2 rounded-full bg-[#f0e087] animate-pulse" />
@@ -176,7 +176,7 @@ export function CardListBookingStudent({
                         </div>
                     </div>
 
-                    {/* Lista com scroll */}
+                    
                     <div
                         className="space-y-3 max-h-[400px] overflow-y-auto pr-3 text-left
                     [&::-webkit-scrollbar]:w-2
@@ -197,13 +197,13 @@ export function CardListBookingStudent({
                                 className="group relative bg-gradient-to-r from-white/[0.03] to-white/[0.06] hover:from-white/[0.08] hover:to-white/[0.12] transition-all duration-300 rounded-2xl p-5 border border-white/[0.08] hover:border-white/20 hover:shadow-lg hover:shadow-black/20"
                                 style={{ animationDelay: `${index * 50}ms` }}
                             >
-                                {/* Indicador lateral */}
+                               
                                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r-full bg-gradient-to-b from-[#f0e087] to-[#e5d67a] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
-                                    {/* COLUNA ESQUERDA */}
+                                   
                                     <div className="flex-1 space-y-3">
-                                        {/* Data e hora */}
+                                        
                                         <div className="flex flex-wrap items-center gap-2 text-white">
                                             <span className="inline-flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-lg text-sm font-medium">
                                                 <Calendar className="w-3.5 h-3.5 text-[#f0e087]" />
@@ -220,7 +220,7 @@ export function CardListBookingStudent({
                                             </span>
                                         </div>
 
-                                        {/* Mentor */}
+                                      
                                         <div className="flex items-center gap-2">
                                             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0d6bb8] to-[#083d71] flex items-center justify-center border border-white/10">
                                                 <User className="w-4 h-4 text-white/80" />
@@ -235,20 +235,18 @@ export function CardListBookingStudent({
                                             </div>
                                         </div>
 
-                                        {/* Google Meet */}
                                         {renderMeetLink(
                                             item.status,
                                             item.video_link,
                                         )}
 
-                                        {/* DESCRIÇÃO CONDICIONAL */}
+                                     
                                         {renderDescription(
                                             item.status,
                                             item.description,
                                         )}
                                     </div>
 
-                                    {/* COLUNA DIREITA */}
                                     <div className="flex flex-col items-end gap-3 sm:self-start">
                                         {functionStatusBadge(item.status)}
                                         {renderStudentActions(
@@ -261,7 +259,7 @@ export function CardListBookingStudent({
                         ))}
                     </div>
 
-                    {/* Footer */}
+                   
                     <div className="mt-6 pt-4 border-t border-white/10 text-center flex flex-col gap-2">
                         <p className="text-white/40 text-xs">
                             Role para ver mais aulas

@@ -34,15 +34,15 @@ export function ReservedSlotModal({
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            {/* Backdrop */}
+          
             <div
                 className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                 onClick={onClose}
             />
 
-            {/* Modal */}
+           
             <div className="relative w-full max-w-md bg-[#0a1929] rounded-2xl shadow-2xl border border-[#0a4d8f]/30 overflow-hidden animate-in fade-in zoom-in duration-200">
-                {/* Header */}
+                
                 <div className="relative bg-linear-to-br from-yellow-500 to-yellow-600 p-6 text-center">
                     <button
                         onClick={onClose}
@@ -62,7 +62,7 @@ export function ReservedSlotModal({
                     </h2>
                 </div>
 
-                {/* Content */}
+               
                 <div className="p-6 space-y-5">
                     <div className="space-y-4">
                         <div className="flex items-start gap-3 p-4 bg-[#083d71]/40 rounded-lg border border-[#0a4d8f]/30">

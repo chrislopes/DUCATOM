@@ -107,7 +107,7 @@ export function ConfirmationDialog({
                     </DialogTitle>
 
                     <DialogDescription className="flex flex-col md:flex-row justify-center items-start md:items-center gap-4 text-center md:text-left">
-                        {/* Select Dia */}
+                       
                         <Select
                             onValueChange={(val) => {
                                 setSelectedDay(Number(val));

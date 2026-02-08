@@ -16,7 +16,7 @@ export function DashboardGreeting({
                 <span className="text-[#f0e087] font-semibold">{name}</span>?
             </h1>
 
-            {/* Condição baseada no role */}
+            
             {user?.role === 'STUDENT' && (
                 <p className="text-sm md:text-base text-white/80 mt-1">
                     Você tem <span className="font-semibold">{credits}</span>{' '}

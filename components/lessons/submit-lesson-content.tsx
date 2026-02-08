@@ -67,7 +67,7 @@ export function SubmitLessonContent({
 
         const success = await changeStatus(aulaId, mentorUser.id, 'em análise');
 
-        console.log('Status atualizado?', success);
+        
 
         if (!success) {
             alert('Erro ao reenviar a aula. Tente novamente.');
@@ -88,7 +88,7 @@ export function SubmitLessonContent({
 
     return (
         <div className="flex-1 space-y-6 md:space-y-8 mb-6">
-            {/* Vídeo de Suporte */}
+         
             <Card className="bg-[#0a4d8f] border-none p-4 md:p-6">
                 <div className="space-y-4">
                     <div className="flex items-center gap-2 mb-4">
@@ -125,12 +125,11 @@ export function SubmitLessonContent({
                 </div>
             </Card>
 
-            {/* Upload de Vídeo */}
             {!isAdmin && (
                 <>
                     <Card className="bg-[#0a4d8f] border-none p-4 md:p-6">
                         <div className="space-y-5">
-                            {/* Header */}
+                         
                             <div className="flex items-center gap-3">
                                 <div className="bg-[#f0e087] p-2 rounded-lg">
                                     <FileVideo className="w-5 h-5 text-[#083d71]" />
@@ -140,7 +139,7 @@ export function SubmitLessonContent({
                                 </h3>
                             </div>
 
-                            {/* Info */}
+                        
                             <div className="bg-white/10 rounded-lg p-4 space-y-2">
                                 <p className="text-lg text-white text-center">
                                     📌{' '}
@@ -160,7 +159,7 @@ export function SubmitLessonContent({
                                 </p>
                             </div>
 
-                            {/* Action */}
+                      
                             <button
                                 type="button"
                                 onClick={handleSendWhatsApp}

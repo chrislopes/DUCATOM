@@ -96,7 +96,7 @@ export async function byCreateBookingStudentService(
         return { success: true, data };
     } catch (error: any) {
 
-        console.log(error.response.data.error);
+      
         
         return {
             success: false,

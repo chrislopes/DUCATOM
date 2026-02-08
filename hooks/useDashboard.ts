@@ -54,7 +54,7 @@ export function useDashboardUser() {
 
                 setMentorId(response.data[0].id);
             } else {
-                //ADMIN
+               
             }
         } catch (error: any) {
             toast.error(error?.message || 'Erro ao carregar dados do usuario.');

@@ -1,4 +1,3 @@
-// src/api/supabaseAuth.api.ts
 import axios from 'axios';
 import { createClient } from '@supabase/supabase-js';
 

@@ -41,14 +41,14 @@ export async function sendMentorLessonRequest(
     aula_id: number,
     mentor_id: number,
 ) {
-    // 1. verifica se já existe
+    
     const existing = await getMentorLessonRequest(aula_id, mentor_id);
 
     if (existing) {
         return existing;
     }
 
-    // 2. cria só se não existir
+   
     const url = `/rest/v1/mentor_aulas`;
     const body = { aula_id, mentor_id };
 

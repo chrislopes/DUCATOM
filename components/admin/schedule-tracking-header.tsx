@@ -51,13 +51,12 @@ export function ScheduleTrackingHeader({
         const updateDateTime = () => {
             const now = new Date();
 
-            // Format time: HH:MM:SS
+          
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
             setCurrentTime(`${hours}:${minutes}:${seconds}`);
 
-            // Format date: Day, DD de Month
             const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
             const months = [
                 'Janeiro',
@@ -122,14 +121,14 @@ export function ScheduleTrackingHeader({
                     <span className="hidden sm:inline">Sair</span>
                 </Button>
             </div>
-            {/* Logo and Title */}
+           
             <div
                 className="
     flex flex-col gap-4 pb-3
     md:flex-row md:items-center md:justify-between
   "
             >
-                {/* BUTTON – topo no mobile */}
+                
                 <div className="order-1 md:order-2">
                     <TooltipProvider>
                         <Tooltip>
@@ -170,8 +169,7 @@ export function ScheduleTrackingHeader({
                     </TooltipProvider>
                 </div>
 
-                {/* TEXTO – centralizado no mobile */}
-                <div
+               <div
                     className="
       order-2 md:order-1
       flex items-center gap-3
@@ -212,9 +210,9 @@ export function ScheduleTrackingHeader({
                 </div>
             </div>
 
-            {/* Date, Time, Tabs and Filter */}
+            
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                {/* Date and Time */}
+            
                 <div className="flex flex-col gap-1">
                     <div className="text-2xl md:text-3xl font-bold text-[#f0e087]">
                         {currentTime}
@@ -224,9 +222,8 @@ export function ScheduleTrackingHeader({
                     </div>
                 </div>
 
-                {/* Tabs and Filter */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                    {/* Tabs */}
+                  
                     <div className="flex gap-2">
                         <button
                             onClick={() => onTabChange('alunos')}
@@ -252,7 +249,7 @@ export function ScheduleTrackingHeader({
 
                     {activeTab === 'mentores' && (
                         <>
-                            {/* Filter by Mentor */}
+                            
                             <Select
                                 value={selectedMentor}
                                 onValueChange={onMentorChange}

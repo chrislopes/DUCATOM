@@ -58,10 +58,7 @@ export function LessonUnderAnalysis() {
         await sendAdminFeedbackStatus(aulaId, mentorId, 'negado', feedback);
 
         router.push('/validacao-aulas');
-        // 👉 aqui você pode:
-        // - redirecionar
-        // - fechar modal
-        // - refetch da lista
+       
     }
 
     async function handleAprovarAula() {
@@ -73,22 +70,22 @@ export function LessonUnderAnalysis() {
         );
         
         router.push('/validacao-aulas');
-        // 👉 mesmas ações pós sucesso
+       
     }
 
     return (
         <div className="min-h-screen bg-linear-to-b from-[#083d71] to-[#0a4d8f] flex flex-col">
-            {/* Header */}
+            
             <div className="bg-[#083d71] py-6 px-4 md:px-6 border-b border-white/10">
                 <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-white text-center">
                     Validação Aulas
                 </h1>
             </div>
 
-            {/* Content */}
+         
             <div className="flex-1 flex items-center justify-center p-4 md:p-6">
                 <div className="w-full max-w-2xl space-y-8 md:space-y-12">
-                    {/* Module and Lesson Info */}
+                    
                     <div className="text-center space-y-2">
                         <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-[#f0e087]">
                             {module} | {lesson}
@@ -98,10 +95,9 @@ export function LessonUnderAnalysis() {
                         </p>
                     </div>
 
-                    {/* Loading Icon */}
                     <div className="flex justify-center">
                         <div className="relative">
-                            {/* Spinning loader */}
+                           
                             <div className="bg-[#0a4d8f] rounded-full p-8 md:p-12 border-4 border-[#083d71]">
                                 <Loader2
                                     className="w-16 h-16 md:w-24 md:h-24 text-[#f0e087] animate-spin"
@@ -111,7 +107,6 @@ export function LessonUnderAnalysis() {
                         </div>
                     </div>
 
-                    {/* Status Message */}
                     <div className="text-center space-y-4">
                         <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
                             Em Análise
@@ -143,7 +138,7 @@ export function LessonUnderAnalysis() {
                                 </CardHeader>
 
                                 <CardContent className="space-y-6">
-                                    {/* INFORMATIVO */}
+                                 
                                     <div className="bg-[#083d71]/60 border border-[#f0e087]/30 rounded-xl p-4 text-sm md:text-base text-gray-200 leading-relaxed">
                                         Caso o vídeo tenha sido recebido
                                         corretamente pelo time de auditoria e a
@@ -155,7 +150,7 @@ export function LessonUnderAnalysis() {
                                         corrigida.
                                     </div>
 
-                                    {/* FEEDBACK */}
+                               
                                     <div className="space-y-2">
                                         <Label className="text-gray-300">
                                             Feedback para o mentor
@@ -174,7 +169,7 @@ export function LessonUnderAnalysis() {
                                 </CardContent>
 
                                 <CardFooter className="flex flex-col sm:flex-row gap-3 justify-end">
-                                    {/* NEGAR */}
+                                  
                                     <Button
                                         disabled={!feedbackValido || loading}
                                         variant="destructive"
@@ -185,7 +180,6 @@ export function LessonUnderAnalysis() {
                                         {loading ? 'Negando...' : 'Negar Aula'}
                                     </Button>
 
-                                    {/* APROVAR */}
                                     <Button
                                         disabled={!feedbackValido || loading}
                                         className="

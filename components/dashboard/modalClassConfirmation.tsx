@@ -85,7 +85,7 @@ export function ModalClassConfirmation({
                                     }}
                                 >
                                     <div className="flex flex-col gap-4">
-                                        {/* Header da aula */}
+                                        
                                         <div className="flex items-start justify-between gap-3">
                                             <div className="flex-1 min-w-0">
                                                 <div className="flex items-center gap-2 mb-2">
@@ -149,7 +149,6 @@ export function ModalClassConfirmation({
                                             </span>
                                         </div>
 
-                                        {/* Botões de ação */}
                                         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                                             <Button
                                                 className="flex-1 h-10 sm:h-11 text-sm font-semibold rounded-lg transition-all duration-200 hover:bg-green-400 active:scale-[0.98] cursor-pointer bg-green-500 text-white"

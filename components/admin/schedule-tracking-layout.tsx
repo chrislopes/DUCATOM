@@ -10,7 +10,7 @@ import { useDashboardAdmin } from '@/hooks/useDashboard_Admin';
 import { useMentorAgendaGrid } from '@/hooks/useMentorAgendaGrid';
 import { StudentsBookingsList } from './students-bookings-list';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 export function ScheduleTrackingLayout() {
@@ -78,7 +78,7 @@ export function ScheduleTrackingLayout() {
     return (
         <div className="min-h-screen bg-[#083d71] text-white p-4 md:p-6 lg:p-8">
             <div className="max-w-[1400px] mx-auto space-y-6">
-                {/* HEADER */}
+               
                 <ScheduleTrackingHeader
                     activeTab={activeTab}
                     onTabChange={setActiveTab}
@@ -93,7 +93,7 @@ export function ScheduleTrackingLayout() {
 
                 {activeTab === 'mentores' && (
                     <>
-                        {/* STATS */}
+                      
                         {dashboardLoading && hasMentorSelected && (
                             <ScheduleStatsSkeleton />
                         )}
@@ -112,7 +112,7 @@ export function ScheduleTrackingLayout() {
                                 />
                             )}
 
-                        {/* GRID LOADING */}
+                      
                         {gridLoading && hasMentorSelected && (
                             <div className="h-80 bg-[#0a4d8f]/30 rounded-xl animate-pulse" />
                         )}
@@ -205,7 +205,7 @@ export function ScheduleTrackingLayout() {
                             </Card>
                         </div>
 
-                        {/* GRID */}
+                      
                         {!gridLoading &&
                             agendaGrid &&
                             agendaGrid.agenda_publicada &&
@@ -216,7 +216,7 @@ export function ScheduleTrackingLayout() {
                                 />
                             )}
 
-                        {/* AGENDA NÃO PUBLICADA */}
+                      
                         {!gridLoading &&
                             agendaGrid &&
                             !agendaGrid.agenda_publicada && (
@@ -231,7 +231,7 @@ export function ScheduleTrackingLayout() {
                                 </div>
                             )}
 
-                        {/* ESTADO INICIAL */}
+                      
                         {!hasMentorSelected && (
                             <div className="flex flex-col items-center justify-center min-h-[400px] bg-[#0a4d8f]/30 rounded-xl border-2 border-dashed border-[#0a4d8f] p-8">
                                 <div className="text-center space-y-4 max-w-md">
@@ -266,7 +266,7 @@ export function ScheduleTrackingLayout() {
                     </>
                 )}
 
-                {/* TELA DO ALUNO COM SUAS INFORMACOES */}
+             
                 {activeTab === 'alunos' && (
                     <>
                         <StudentsBookingsList studentId={studentId} />

@@ -30,8 +30,7 @@ export function TimeSelector() {
 
     const { createTimeSlot, loading } = useAvailabilityTimeSlotMentor();
 
-    //VALOR QUE RECEBO DO ID (mentorWeekdayId) PARA FAZER A REQUISICAO A TABELA TIME_SLOT
-    const { mentorWeekdayId } = useMentorWeekday();
+   const { mentorWeekdayId } = useMentorWeekday();
 
     const handleTimeClick = (time: string) => {
         setSelectedTime(time);
@@ -56,7 +55,7 @@ export function TimeSelector() {
 
     return (
         <div className="space-y-6">
-            {/* Time Slots Grid */}
+           
             <div className="bg-[#05284a] rounded-3xl p-6 md:p-8">
                 <div className="grid grid-cols-4 gap-3 md:gap-4">
                     {TIME_SLOTS.map((time) => (
@@ -75,7 +74,7 @@ export function TimeSelector() {
                 </div>
             </div>
 
-            {/* Confirm Button */}
+            
             {selectedTime && (
                 <div className="flex justify-center animate-in fade-in slide-in-from-bottom-4 duration-300">
                     <Button

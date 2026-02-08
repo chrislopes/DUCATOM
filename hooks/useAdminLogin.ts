@@ -31,7 +31,7 @@ export function useAdminLogin() {
             return;
         }
 
-        // Admin autenticado com sucesso
+     
         if (accountType === 'aluno') {
             toast.success('Login realizado!');
             router.push('/criar-aluno');

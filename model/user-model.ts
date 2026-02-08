@@ -53,7 +53,6 @@ export interface Mentor {
     agenda_publicada: boolean;
 }
 
-// Interface baseada no JSON fornecido
 export interface StudentBooking {
     booking_id: number;
     status: string;

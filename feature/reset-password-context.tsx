@@ -31,7 +31,7 @@ export function ResetPasswordProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const hash = window.location.hash;
 
-        // Só troca o token se for realmente recovery
+       
         if (hash.includes('type=recovery')) {
             const doExchange = async () => {
                 const { data, error } =
@@ -49,7 +49,6 @@ export function ResetPasswordProvider({ children }: { children: ReactNode }) {
         }
     }, []);
 
-    // 🔥 Função final para redefinir senha
     const handleResetPassword = async () => {
         if (!password || !confirmPassword) {
             toast.error('Preencha todos os campos.');

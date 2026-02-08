@@ -7,7 +7,7 @@ import Link from 'next/link';
 export function EmailSentConfirmation() {
     return (
         <div className="w-full max-w-md mx-auto space-y-8 text-center">
-            {/* Success Icon */}
+         
             <div className="flex justify-center">
                 <div className="relative">
                     <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-[#0a4d8f] flex items-center justify-center">
@@ -19,12 +19,11 @@ export function EmailSentConfirmation() {
                 </div>
             </div>
 
-            {/* Title */}
+         
             <h1 className="text-2xl md:text-3xl font-bold text-white">
                 E-mail Enviado!
             </h1>
 
-            {/* Description */}
             <div className="space-y-3">
                 <p className="text-gray-300 text-sm md:text-base leading-relaxed">
                     Enviamos um link de redefinição de senha para o seu e-mail.
@@ -34,7 +33,6 @@ export function EmailSentConfirmation() {
                 </p>
             </div>
 
-            {/* Info Box */}
             <div className="bg-[#0a4d8f] p-4 md:p-6 rounded-lg space-y-2">
                 <p className="text-[#f0e087] font-medium text-sm md:text-base">
                     Não recebeu o e-mail?
@@ -43,8 +41,7 @@ export function EmailSentConfirmation() {
                     Aguarde alguns minutos ou tente novamente.
                 </p>
             </div>
-
-            {/* Back to Login Button */}
+            
             <Link href="/">
                 <Button className="w-full bg-[#f0e087] hover:bg-[#e0d077] text-[#083d71] font-semibold h-12 md:h-14 text-base md:text-lg rounded-full transition-all duration-300 hover:scale-105">
                     Voltar para o Login

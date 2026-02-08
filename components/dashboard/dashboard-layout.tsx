@@ -116,13 +116,12 @@ export function DashboardLayout() {
 
     return (
         <div className="min-h-screen flex flex-col">
-            {/* Header fixo no topo */}
+        
             <DashboardHeader />
 
-            {/* Conteúdo principal com scroll */}
             <main className="flex-1 px-4 py-6 md:px-8 md:py-8 lg:max-w-4xl lg:mx-auto lg:w-full">
                 <div className="space-y-6 md:space-y-8">
-                    {/* Saudação e créditos */}
+                    
                     {user?.role === 'STUDENT' && (
                         <DashboardGreeting
                             name={userData.name}
@@ -137,7 +136,7 @@ export function DashboardLayout() {
                         />
                     )}
 
-                    {/* Seção da próxima aula */}
+                   
 
                     <NextClassSection
                         listBookings={listBookings}
@@ -145,10 +144,10 @@ export function DashboardLayout() {
                         onRefreshBookings={refreshBookings}
                     />
 
-                    {/* Navegação principal */}
+                   
                     <DashboardNavigation hasBookings={hasBlockingBooking} />
 
-                    {/* Botão de ajuda */}
+                
                     <HelpButton />
                 </div>
             </main>

@@ -55,8 +55,7 @@ export function useGetWeekDayAvailabilityMentor() {
         try {
             setLoading(true);
 
-            //NAO FUNCIONA, NAO TRAZ O ID, SOLUCAO E EFECT NO COMPONENTE
-            const idMentor = mentorData?.id;
+           const idMentor = mentorData?.id;
 
             if (!idMentor) {
                 throw new Error('ID do mentor não encontrado');
@@ -153,11 +152,11 @@ export function useGetWeekDay_timeSlotMentor() {
                 return null;
             }
 
-            // 👉 transformar os dados brutos da API
+          
             const mapped = result.data.map((item: any) => ({
                 id: item.id.toString(),
                 day: mapNumberToDay(item.dia_semana),
-                startTime: item.start_time.substring(0, 5), // "10:00:00" → "10:00"
+                startTime: item.start_time.substring(0, 5), 
             }));
 
             setTimeSlots(mapped);

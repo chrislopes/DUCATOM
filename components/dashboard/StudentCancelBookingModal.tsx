@@ -45,7 +45,7 @@ export function StudentCancelBookingModal({
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
             <div className="w-full max-w-md rounded-2xl bg-[#0b1220] border border-white/10 p-6 relative">
-                {/* Fechar */}
+              
                 <button
                     onClick={onClose}
                     className="absolute right-4 top-4 text-white/40 hover:text-white"
@@ -53,7 +53,6 @@ export function StudentCancelBookingModal({
                     <X size={18} />
                 </button>
 
-                {/* Título */}
                 <h2 className="text-lg font-semibold text-white mb-2">
                     {content.title}
                 </h2>
@@ -62,7 +61,7 @@ export function StudentCancelBookingModal({
                     {content.description}
                 </p>
 
-                {/* Descrição */}
+              
                 <div className="space-y-2">
                     <label className="text-xs text-white/60">
                         Descreva o motivo
@@ -77,7 +76,7 @@ export function StudentCancelBookingModal({
                     />
                 </div>
 
-                {/* Ações */}
+               
                 <div className="mt-6 flex justify-end gap-3">
                     <Button
                         variant="ghost"

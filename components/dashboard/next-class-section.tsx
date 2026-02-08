@@ -50,14 +50,13 @@ export function NextClassSection({
                 </h2>
             )}
             <Card className="bg-[#0a5491] border-[#0d6bb8] p-6 md:p-8 text-center">
-                {/* LOADING */}
+              
                 {loading && (
                     <div className="w-full flex justify-center items-center">
                         <Spinner className="size-20 text-[#f0e087] " />
                     </div>
                 )}
 
-                {/* STUDENT */}
                 {user?.role === 'STUDENT' && !loading && (
                     <CardListBookingStudent
                         listBookings={listBookings}
@@ -68,7 +67,7 @@ export function NextClassSection({
                     />
                 )}
 
-                {/* MENTOR*/}
+               
                 {user?.role === 'MENTOR' && !loading && (
                     <CardListBookingMentor
                         listBookings={listBookings}

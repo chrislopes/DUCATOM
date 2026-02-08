@@ -73,7 +73,7 @@ export function DaySelector() {
 
             setMentorWeekdayId(result);
 
-            // 2) Redireciona após salvar
+           
             const day = DAYS.find((d) => d.id === selectedDay);
 
             router.push(
@@ -86,7 +86,7 @@ export function DaySelector() {
 
     return (
         <div className="space-y-6">
-            {/* Day Buttons Grid */}
+            
             <div className="grid grid-cols-2 gap-3 md:gap-4">
                 {DAYS.map((day) => (
                     <Button
@@ -109,7 +109,6 @@ export function DaySelector() {
                 ))}
             </div>
 
-            {/* Confirm Button */}
             {selectedDay && (
                 <div className="flex justify-center animate-in fade-in slide-in-from-bottom-4 duration-300">
                     <Button

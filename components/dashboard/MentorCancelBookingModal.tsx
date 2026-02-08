@@ -45,14 +45,14 @@ export function MentorCancelBookingModal({
                 </DialogHeader>
 
                 <div className="space-y-4">
-                    {/* TEXTO INFORMATIVO */}
+                  
                     <p className="text-sm text-white/70">
                         Ao negar esta solicitação, o aluno será notificado.
                         Informe o motivo para manter uma comunicação clara e
                         profissional.
                     </p>
 
-                    {/* DESCRIÇÃO */}
+                
                     <div className="space-y-2">
                         <label className="text-sm text-white/80 font-medium">
                             Motivo da negação{' '}
@@ -71,7 +71,6 @@ export function MentorCancelBookingModal({
                         </p>
                     </div>
 
-                    {/* AÇÕES */}
                     <div className="flex justify-end gap-3 pt-4">
                         <Button
                             variant="default"

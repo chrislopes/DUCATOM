@@ -13,7 +13,7 @@ export function ForgotPasswordForm() {
 
     const submit = async () => {
         if (!email) {
-            console.log('email vazio');
+            
             return;
         }
 

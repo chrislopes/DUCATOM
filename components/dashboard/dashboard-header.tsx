@@ -129,7 +129,6 @@ export function DashboardHeader() {
                     </span>
                 </div>
 
-                {/* Botão de logout - mobile (ícone) */}
                 <button
                     type="button"
                     onClick={logout}
@@ -139,7 +138,6 @@ export function DashboardHeader() {
                     <LogOut className="h-5 w-5" />
                 </button>
 
-                {/* Botão de logout - desktop */}
                 <button
                     type="button"
                     onClick={logout}

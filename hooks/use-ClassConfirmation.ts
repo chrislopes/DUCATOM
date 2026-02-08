@@ -78,7 +78,7 @@ export function useClassConfirmation() {
         if (nextIndex < pendingBookings.length) {
             setCurrentIndex(nextIndex);
         } else {
-            // acabou a fila
+            
             setPendingBookings([]);
             setCurrentIndex(0);
         }

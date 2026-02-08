@@ -39,7 +39,7 @@ export function ScheduleStats({
                     </CardTitle>
                 </CardHeader>
 
-                {/* 🔽 SCROLL AQUI */}
+                
                 <CardContent
                     className="
                             space-y-4

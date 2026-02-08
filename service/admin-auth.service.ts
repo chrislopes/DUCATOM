@@ -1,4 +1,3 @@
-// src/service/admin-auth.service.ts
 import { supabaseLoginRequest } from '@/service/endpoints/supabaseAuth.endpoint';
 
 export async function adminLoginService(email: string, password: string) {

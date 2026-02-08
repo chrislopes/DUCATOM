@@ -35,7 +35,7 @@ export function ModalValidateMentor({
                         Valide suas primeiras aulas!
                     </DialogTitle>
 
-                    {/* 🔧 CORREÇÃO AQUI */}
+                    
                     <DialogDescription className="text-base text-white/90 sm:text-lg">
                         Não é possível compartilhar sua agenda sem antes validar
                         no{' '}

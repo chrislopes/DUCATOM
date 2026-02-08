@@ -118,7 +118,7 @@ export function useDashboardAdmin() {
             }
 
             setStudentBookingId(response.data);
-            // const [data] = response.data || [];
+           
         } catch (error: any) {
             toast.error(error?.message || 'Erro ao buscar dados do Aluno');
         } finally {

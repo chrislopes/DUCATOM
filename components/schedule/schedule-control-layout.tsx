@@ -67,7 +67,7 @@ export function ScheduleControlLayout() {
         }
         await searchWeekDay_timeSlot_Mentor(mentorUser?.id);
 
-        console.log(timeSlots.length);
+       
 
         if (timeSlots.length <= 6) {
             setAgendaPublicada(false);
@@ -94,7 +94,7 @@ export function ScheduleControlLayout() {
         if (timeSlots.length < 6) return;
 
         const success = await publishAgendaMentor(mentorUser?.id);
-        console.log(success);
+        
 
         setAgendaPublicada(true);
 

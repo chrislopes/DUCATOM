@@ -17,7 +17,7 @@ export function ForgotPasswordActions({
 }: ForgotPasswordActionsProps) {
     return (
         <div className="space-y-4">
-            {/* Submit Button */}
+           
             <Button
                 onClick={onSubmit}
                 disabled={disabled}
@@ -36,7 +36,6 @@ export function ForgotPasswordActions({
                 )}
             </Button>
 
-            {/* Back to Login Link */}
             <Link href="/">
                 <Button
                     variant="ghost"

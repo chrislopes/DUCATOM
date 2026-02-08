@@ -21,7 +21,7 @@ export function ValidateLessonsLayout() {
     const [selectedMentorId, setSelectedMentorId] = useState<number | null>(
         null,
     );
-    
+
     const mentorNivelFinal = isAdmin
         ? (mentorId?.nivel ?? 0)
         : (mentorUser?.nivel ?? 0);
@@ -45,12 +45,10 @@ export function ValidateLessonsLayout() {
 
     useEffect(() => {
         if (isAdmin) {
-            // ADMIN só carrega quando escolher um mentor
             if (!selectedMentorId) return;
             loadModulesAndLessons(selectedMentorId);
             byMentorIdAdmin(selectedMentorId);
         } else {
-            // MENTOR carrega automaticamente o próprio mentor
             if (!mentorUser?.id) return;
             loadModulesAndLessons(mentorUser.id);
         }

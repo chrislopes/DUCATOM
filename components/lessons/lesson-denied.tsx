@@ -58,13 +58,13 @@ export function LessonDenied() {
     return (
         <div className="min-h-screen bg-linear-to-b from-[#083d71] to-[#0a4d8f] flex items-center justify-center p-4">
             <div className="w-full max-w-2xl">
-                {/* Header */}
+                
                 <div className="text-center mb-8">
                     <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">
                         Validação Aulas
                     </h1>
 
-                    {/* Lesson Info */}
+                 
                     <div className="mb-8">
                         <h2 className="text-lg md:text-xl font-bold text-[#f0e087]">
                             {moduleTitle} | {lessonName}
@@ -74,7 +74,7 @@ export function LessonDenied() {
                         </p>
                     </div>
 
-                    {/* Status Icon and Text */}
+                    
                     <div className="flex flex-col items-center gap-4 mb-8">
                         <div className="bg-red-500 rounded-full p-8 animate-pulse">
                             <XCircle
@@ -87,7 +87,7 @@ export function LessonDenied() {
                         </h3>
                     </div>
 
-                    {/* Feedback Section */}
+                   
                     <div className="mb-8">
                         <h4 className="text-lg md:text-xl font-semibold text-[#f0e087] mb-4">
                             Feedback do time
@@ -99,8 +99,7 @@ export function LessonDenied() {
                         </div>
                     </div>
 
-                    {/* Resubmit Button */}
-
+                  
                     {!isAdmin && (
                         <>
                             <Button
@@ -113,7 +112,6 @@ export function LessonDenied() {
                     )}
                 </div>
 
-                {/* Back Button */}
                 <div className="mt-6 md:mt-8">
                     <Button
                         onClick={handleBack}

@@ -16,7 +16,7 @@ export function ResetPasswordInputs() {
 
     return (
         <div className="space-y-6">
-            {/* Nova Senha */}
+          
             <div className="space-y-2">
                 <Label
                     htmlFor="password"
@@ -52,7 +52,6 @@ export function ResetPasswordInputs() {
                 </div>
             </div>
 
-            {/* Confirmar Senha */}
             <div className="space-y-2">
                 <Label
                     htmlFor="confirmPassword"
@@ -89,8 +88,7 @@ export function ResetPasswordInputs() {
                     </Button>
                 </div>
             </div>
-
-            {/* Requisitos da Senha */}
+            
             <div className="bg-[#062c52] border border-[#0a4275] rounded-lg p-4">
                 <p className="text-xs md:text-sm text-white/70">
                     A senha deve conter no mínimo 6 caracteres

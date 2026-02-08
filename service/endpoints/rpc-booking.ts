@@ -69,7 +69,7 @@ export async function createBookingStudentRequest(
 ) {
     const token = getCookie('sb_access_token');
 
-    console.log('token do JWT ', token);
+   
 
     if (!token) {
         throw new Error('Usuário não autenticado');

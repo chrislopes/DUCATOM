@@ -32,7 +32,7 @@ export function MentorWeekdayProvider({ children }: { children: ReactNode }) {
     );
 }
 
-// Hook para usar facilmente
+
 export function useMentorWeekday() {
     const ctx = useContext(MentorWeekdayContext);
     if (!ctx) {

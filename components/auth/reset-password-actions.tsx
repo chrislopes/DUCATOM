@@ -15,7 +15,7 @@ export function ResetPasswordActions() {
     const onSubmit = async () => {
         const ok = await handleResetPassword();
 
-        // Se deu certo, redireciona para login
+       
         if (ok) {
             router.push('/');
         }

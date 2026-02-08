@@ -12,17 +12,17 @@ export function VideoSentConfirmation() {
 
     return (
         <div className="min-h-screen bg-linear-to-b from-[#083d71] to-[#0a4d8f] flex flex-col">
-            {/* Header */}
+           
             <div className="bg-[#083d71] py-6 px-4 md:px-6 border-b border-white/10">
                 <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-white text-center">
                     Validação Aulas
                 </h1>
             </div>
 
-            {/* Content */}
+            
             <div className="flex-1 flex items-center justify-center p-4 md:p-6">
                 <div className="w-full max-w-2xl space-y-8 md:space-y-12">
-                    {/* Module and Lesson Info */}
+                   
                     <div className="text-center space-y-2">
                         <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-[#f0e087]">
                             {module} | {lesson}
@@ -32,10 +32,10 @@ export function VideoSentConfirmation() {
                         </p>
                     </div>
 
-                    {/* Success Icon */}
+                   
                     <div className="flex justify-center">
                         <div className="relative">
-                            {/* Pulsing background */}
+                         
                             <div className="absolute inset-0 bg-green-500/20 rounded-full animate-ping" />
                             <div className="relative bg-green-500 rounded-full p-8 md:p-12">
                                 <CheckCircle
@@ -46,7 +46,6 @@ export function VideoSentConfirmation() {
                         </div>
                     </div>
 
-                    {/* Success Message */}
                     <div className="text-center space-y-4">
                         <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#f0e087]">
                             Recebemos o seu vídeo!
@@ -71,7 +70,7 @@ export function VideoSentConfirmation() {
                 </div>
             </div>
 
-            {/* Back Button */}
+           
         </div>
     );
 }

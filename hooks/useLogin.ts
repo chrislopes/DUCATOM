@@ -9,7 +9,7 @@ import { useAuth } from '@/contexts/auth-context';
 export function useLogin() {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const { setUser } = useAuth(); // ← AQUI
+    const { setUser } = useAuth(); 
 
     async function handleLogin(email: string, password: string) {
         setLoading(true);
