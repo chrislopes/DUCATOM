@@ -9,6 +9,7 @@ export function AdminLoginHeader({ accountType }: AdminLoginHeaderProps) {
     const getTitle = () => {
         if (accountType === 'aluno') return 'Criar Conta de Aluno';
         if (accountType === 'mentor') return 'Criar Conta de Mentor';
+        if (accountType === 'admin') return 'Criar conta do Administrador';
         return 'Acesso Administrativo';
     };
 
@@ -33,8 +34,8 @@ export function AdminLoginHeader({ accountType }: AdminLoginHeaderProps) {
                 </div>
                 <p className="text-white text-sm md:text-base">{getTitle()}</p>
                 <p className="text-white/70 text-xs md:text-sm max-w-sm text-balance">
-                    Somente administradores podem criar contas de alunos e
-                    mentores
+                    Somente administradores podem criar contas de alunos,
+                    mentores e administradores.
                 </p>
             </div>
         </div>

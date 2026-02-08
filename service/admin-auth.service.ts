@@ -23,7 +23,6 @@ export async function adminLoginService(email: string, password: string) {
             };
         }
 
-        // login ok: retornar token/user para que a camada de front decida o que guardar
         return { success: true, data };
     } catch (error: any) {
         return {

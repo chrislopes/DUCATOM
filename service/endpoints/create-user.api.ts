@@ -1,7 +1,7 @@
 export async function createStudentRequest(
     name: string,
     email: string,
-    password: string
+    password: string,
 ) {
     const response = await fetch(
         `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/signup`,
@@ -21,7 +21,7 @@ export async function createStudentRequest(
                     nome: name,
                 },
             }),
-        }
+        },
     );
 
     const result = await response.json();
@@ -39,7 +39,7 @@ export async function createStudentRequest(
 export async function createMentorRequest(
     name: string,
     email: string,
-    password: string
+    password: string,
 ) {
     const response = await fetch(
         `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/signup`,
@@ -59,7 +59,7 @@ export async function createMentorRequest(
                     nome: name,
                 },
             }),
-        }
+        },
     );
 
     const result = await response.json();
@@ -67,6 +67,44 @@ export async function createMentorRequest(
     if (!response.ok) {
         throw {
             message: result.msg || 'Erro ao criar Mentor.',
+            error: result,
+        };
+    }
+
+    return result;
+}
+
+export async function createAdminRequest(
+    name: string,
+    email: string,
+    password: string,
+) {
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/signup`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+                Authorization: `Bearer ${process.env
+                    .NEXT_PUBLIC_SUPABASE_ANON_KEY!}`,
+            },
+            body: JSON.stringify({
+                email,
+                password,
+                data: {
+                    role: 'ADMIN',
+                    nome: name,
+                },
+            }),
+        },
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+        throw {
+            message: result.msg || 'Erro ao criar Administrador.',
             error: result,
         };
     }

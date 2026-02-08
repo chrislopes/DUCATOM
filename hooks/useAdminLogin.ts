@@ -33,13 +33,14 @@ export function useAdminLogin() {
 
         // Admin autenticado com sucesso
         if (accountType === 'aluno') {
-            console.log('vamos lá');
-            
             toast.success('Login realizado!');
             router.push('/criar-aluno');
         } else if (accountType === 'mentor') {
             toast.success('Login realizado!');
             router.push('/criar-mentor');
+        } else if (accountType === 'admin') {
+            toast.success('Login realizado!');
+            router.push('/criar-admin');
         } else {
             router.push('/');
         }

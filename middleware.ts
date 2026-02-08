@@ -21,6 +21,7 @@ const ROLE_ROUTES: Record<string, string[]> = {
         '/aula-aprovada',
         '/aula-analise',
         '/criar-mentor',
+        '/criar-admin',
     ],
 };
 
