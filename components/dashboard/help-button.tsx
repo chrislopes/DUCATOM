@@ -1,6 +1,6 @@
 'use client';
 
-import { HelpCircle } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
     Tooltip,
@@ -22,8 +22,11 @@ export function HelpButton() {
                             className="inline-flex items-center justify-center
                             h-12 w-12 rounded-full hover:bg-[#0a5491] transition-colors"
                         >
-                            <HelpCircle className="h-8 w-8 text-[#f0e087]" />
-                            <span className="sr-only">Ajuda via WhatsApp</span>
+                            <img
+                                src="/icone-whats.png"
+                                alt="WhatsApp"
+                                className="w-10 h-10"
+                            />
                         </a>
                     </TooltipTrigger>
                     <TooltipContent className="bg-white text-[#083d71]">

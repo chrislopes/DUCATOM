@@ -15,12 +15,15 @@ interface ModuleItemProps {
 export function ModuleItem({ module, mentorNivel, mentorID }: ModuleItemProps) {
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const isLocked = module.nivel > mentorNivel;
+    const nivelNecessario = (module.nivel - 1) * 4;
+    const isLocked = mentorNivel < nivelNecessario;
 
     const toggleExpand = () => {
         if (isLocked) return;
         setIsExpanded(!isExpanded);
     };
+
+    
 
     return (
         <div
@@ -56,7 +59,7 @@ export function ModuleItem({ module, mentorNivel, mentorID }: ModuleItemProps) {
 
                         {isLocked && (
                             <span className="text-xs text-gray-500">
-                                Disponível no nível {module.nivel}
+                                Disponível no nível {nivelNecessario}
                             </span>
                         )}
                     </div>
