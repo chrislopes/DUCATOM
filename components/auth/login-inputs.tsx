@@ -43,7 +43,7 @@ export function LoginInputs({
                         placeholder="Digite sua senha"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="pl-11 pr-11 bg-[#062c52] border-[#0a4275] text-white placeholder:text-white/40 h-12 md:h-14 text-base focus-visible:ring-[#f0e087] focus-visible:border-[#f0e087] transition-all duration-300"
+                        className="pl-11 pr-11 bg-[#0a4d8f] border-[#0a4d8f] text-white placeholder:text-white/40 h-12 md:h-14 text-base focus-visible:ring-[#f0e087] focus-visible:border-[#f0e087] transition-all duration-300"
                     />
                     <Button
                         type="button"
