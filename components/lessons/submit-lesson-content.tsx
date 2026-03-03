@@ -67,46 +67,28 @@ export function SubmitLessonContent({
 
         const success = await changeStatus(aulaId, mentorUser.id, 'em análise');
 
+        
+
         if (!success) {
             alert('Erro ao reenviar a aula. Tente novamente.');
             return;
         }
-        const message = `Olá!
-*Mentor:* ${mentorUser.nome}
-*ID:* ${mentorUser.id}
-*Nivel:* ${mentorUser.nivel}
-*Especialidade:* ${mentorUser.especialidade}
 
-Estou enviando o vídeo da aula:
+        const whatsappMessage = encodeURIComponent(
+            `Olá!\n*Mentor:* ${mentorUser.nome}\n*ID:* ${mentorUser.id}\n*Nivel:* ${mentorUser.nivel}\n*Especialidade:* ${mentorUser.especialidade} \n\nEstou enviando o vídeo da aula:\n\n*Módulo:* ${module}\n*Aula:* ${lesson}\n*Título:* ${name}\n\nSegue abaixo o video!`,
+        );  
 
-*Módulo:* ${module}
-*Aula:* ${lesson}
-*Título:* ${name}
+        const whatsappNumber = '5511923746268'; 
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
-Segue abaixo o video!`;
+        window.open(whatsappUrl, '_blank');
 
-        const whatsappNumber = '5511923746268';
-
-        const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
-
-        // ✅ Criar link real (melhor compatibilidade iOS)
-        const link = document.createElement('a');
-        link.href = whatsappUrl;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // ✅ Pequeno delay para evitar bloqueio no iOS
-        setTimeout(() => {
-            router.push('/validacao-aulas');
-        }, 800);
+        // router.push('/validacao-aulas');
     };
 
     return (
         <div className="flex-1 space-y-6 md:space-y-8 mb-6">
+         
             <Card className="bg-[#0a4d8f] border-none p-4 md:p-6">
                 <div className="space-y-4">
                     <div className="flex items-center gap-2 mb-4">
@@ -137,8 +119,7 @@ Segue abaixo o video!`;
 
                     <div className="bg-[#083d71]/30 rounded-lg p-4">
                         <p className="text-sm md:text-base text-white/90 text-center">
-                            A apostila de suporte para envio esta na pagina
-                            anteiror
+                            A apostila de suporte para envio esta na pagina anteiror
                         </p>
                     </div>
                 </div>
@@ -148,6 +129,7 @@ Segue abaixo o video!`;
                 <>
                     <Card className="bg-[#0a4d8f] border-none p-4 md:p-6">
                         <div className="space-y-5">
+                         
                             <div className="flex items-center gap-3">
                                 <div className="bg-[#f0e087] p-2 rounded-lg">
                                     <FileVideo className="w-5 h-5 text-[#083d71]" />
@@ -157,6 +139,7 @@ Segue abaixo o video!`;
                                 </h3>
                             </div>
 
+                        
                             <div className="bg-white/10 rounded-lg p-4 space-y-2">
                                 <p className="text-lg text-white text-center">
                                     📌{' '}
@@ -176,6 +159,7 @@ Segue abaixo o video!`;
                                 </p>
                             </div>
 
+                      
                             <button
                                 type="button"
                                 onClick={handleSendWhatsApp}
