@@ -58,37 +58,44 @@ export function SubmitLessonContent({
     };
 
     const handleSendWhatsApp = async () => {
-        if (!mentorUser?.id) return;
-
-        if (!mentorUser.id || !aulaId) {
+        if (!mentorUser?.id || !aulaId) {
             console.warn('Dados inválidos para envio');
             return;
         }
 
-        const success = await changeStatus(aulaId, mentorUser.id, 'em análise');
+        const message = `Olá!
+*Mentor:* ${mentorUser.nome}
+*ID:* ${mentorUser.id}
+*Nivel:* ${mentorUser.nivel}
+*Especialidade:* ${mentorUser.especialidade}
 
-        
+Estou enviando o vídeo da aula:
+
+*Módulo:* ${module}
+*Aula:* ${lesson}
+*Título:* ${name}
+
+Segue abaixo o video!`;
+
+        const whatsappNumber = '5511923746268';
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+        // ✅ abrir imediatamente (iOS aceita)
+        const newWindow = window.open(whatsappUrl, '_blank');
+
+        // agora pode rodar async
+        const success = await changeStatus(aulaId, mentorUser.id, 'em análise');
 
         if (!success) {
             alert('Erro ao reenviar a aula. Tente novamente.');
             return;
         }
 
-        const whatsappMessage = encodeURIComponent(
-            `Olá!\n*Mentor:* ${mentorUser.nome}\n*ID:* ${mentorUser.id}\n*Nivel:* ${mentorUser.nivel}\n*Especialidade:* ${mentorUser.especialidade} \n\nEstou enviando o vídeo da aula:\n\n*Módulo:* ${module}\n*Aula:* ${lesson}\n*Título:* ${name}\n\nSegue abaixo o video!`,
-        );  
-
-        const whatsappNumber = '5511923746268'; 
-        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-
-        window.open(whatsappUrl, '_blank');
-
-        // router.push('/validacao-aulas');
+        router.push('/validacao-aulas');
     };
 
     return (
         <div className="flex-1 space-y-6 md:space-y-8 mb-6">
-         
             <Card className="bg-[#0a4d8f] border-none p-4 md:p-6">
                 <div className="space-y-4">
                     <div className="flex items-center gap-2 mb-4">
@@ -119,7 +126,8 @@ export function SubmitLessonContent({
 
                     <div className="bg-[#083d71]/30 rounded-lg p-4">
                         <p className="text-sm md:text-base text-white/90 text-center">
-                            A apostila de suporte para envio esta na pagina anteiror
+                            A apostila de suporte para envio esta na pagina
+                            anteiror
                         </p>
                     </div>
                 </div>
@@ -129,7 +137,6 @@ export function SubmitLessonContent({
                 <>
                     <Card className="bg-[#0a4d8f] border-none p-4 md:p-6">
                         <div className="space-y-5">
-                         
                             <div className="flex items-center gap-3">
                                 <div className="bg-[#f0e087] p-2 rounded-lg">
                                     <FileVideo className="w-5 h-5 text-[#083d71]" />
@@ -139,7 +146,6 @@ export function SubmitLessonContent({
                                 </h3>
                             </div>
 
-                        
                             <div className="bg-white/10 rounded-lg p-4 space-y-2">
                                 <p className="text-lg text-white text-center">
                                     📌{' '}
@@ -159,7 +165,6 @@ export function SubmitLessonContent({
                                 </p>
                             </div>
 
-                      
                             <button
                                 type="button"
                                 onClick={handleSendWhatsApp}

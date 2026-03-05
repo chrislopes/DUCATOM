@@ -1,7 +1,5 @@
 'use client';
 
-import { MessageCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import {
     Tooltip,
     TooltipContent,
